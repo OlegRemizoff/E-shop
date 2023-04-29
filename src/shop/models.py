@@ -34,6 +34,8 @@ class Category(models.Model):
 
     def __str__(self) -> str:
         return self.name
+    
+
 
 
 class Product(models.Model):
@@ -54,6 +56,11 @@ class Product(models.Model):
 
     def __str__(self) -> str:
         return self.title
+    
+    def get_absolute_url(self):
+        return reverse('shop:product_detail', args=[self.category.slug, self.slug])
+
+
 
 
 class SmartPhone(Product):
@@ -75,6 +82,7 @@ class SmartPhone(Product):
 
     def __str__(self) -> str:
         return f'{self.category.name} {self.title}'
+    
 
 
 class Notebook(Product):
