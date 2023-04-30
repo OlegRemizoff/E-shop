@@ -3,9 +3,8 @@ from django.urls import reverse
 from django.contrib.contenttypes.models import ContentType
 
 
-
 class LatestProductsManager:
-    
+
     @staticmethod
     def get_products_for_main_page(*args, **kwargs):
         products = []
@@ -16,11 +15,11 @@ class LatestProductsManager:
             products.extend(model_products)
 
         return products
-    
-class LatestProducts:
-    
-    objects = LatestProductsManager()
 
+
+class LatestProducts:
+
+    objects = LatestProductsManager()
 
 
 class Category(models.Model):
@@ -34,8 +33,10 @@ class Category(models.Model):
 
     def __str__(self) -> str:
         return self.name
-    
 
+    def get_absolute_url(self):
+        print(self.slug)
+        return reverse('shop:product_category', args=[self.id])
 
 
 class Product(models.Model):
@@ -56,11 +57,9 @@ class Product(models.Model):
 
     def __str__(self) -> str:
         return self.title
-    
+
     def get_absolute_url(self):
         return reverse('shop:product_detail', args=[self.category.slug, self.slug])
-
-
 
 
 class SmartPhone(Product):
@@ -82,7 +81,6 @@ class SmartPhone(Product):
 
     def __str__(self) -> str:
         return f'{self.category.name} {self.title}'
-    
 
 
 class Notebook(Product):

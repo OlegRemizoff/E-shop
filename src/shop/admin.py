@@ -6,7 +6,7 @@ from .models import Category, SmartPhone, Notebook
 
 
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ('name', 'slug',)
+    list_display = ('id', 'name', 'slug',)
     prepopulated_fields = {"slug": ("name",)}
 
 
