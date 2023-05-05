@@ -47,8 +47,13 @@
 					</div>
 				</div>
 				<div class="product-links">
-					<a href="#"><i class="fas fa-shopping-cart"></i></a>
-					<a href="#"><i class="far fa-heart"></i></a>
+					<!-- <a href="#"><i class="fas fa-shopping-cart"></i></a> -->
+					<!-- <a href="#"><i class="far fa-heart"></i></a> -->
+					<form action="{% url 'cart:add' product.category.name  product.id %}" method="post">
+						{% csrf_token %}
+						<button type="submit" class="btn-danger">В корзину</button>
+					</form>
+
 				</div>
 
 			</div>

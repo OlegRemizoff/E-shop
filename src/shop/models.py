@@ -35,7 +35,6 @@ class Category(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        print(self.slug)
         return reverse('shop:product_category', args=[self.id])
 
 
