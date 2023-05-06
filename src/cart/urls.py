@@ -8,8 +8,8 @@ app_name = "cart"
 
 urlpatterns = [
     path('', index, name="cart_detail"),
-    path('<str:type>/<int:id>/add/', add_to_cart, name="add"),
-    path('<str:type>/<int:id>/remove/', remove_from_cart, name="remove"),
+    path('<str:type>/<int:id>/<str:slug>/', add_to_cart, name="add"),
+    path('<str:slug>/', remove_from_cart, name="remove"),
     path('delete/', delete_cart, name="delete"),
 
     

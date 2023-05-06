@@ -4,20 +4,28 @@
 
 <h1>Your cart:</h1>
 
+    {{ items }}
+{% for item in items %}
 
+    <p>{{ item.title }}</p>
+    <p>{{ item.price }}</p>
+    <p>{{ item.qty }}</p>
+    <form action="{% url 'cart:remove' item.slug %}" method="POST">
+        {% csrf_token %}
+        <button type="submit" class="btn-danger">Удалить</button>
+    </form>
 
-{% for item in cart %}
-    <p>{{ item }}</p>
 {% endfor %}
 
 
-<div>
 
-<form action="{% url 'cart:delete' %}" method="GET">
-    {% csrf_token %}
-    <button type="submit" class="btn-danger">Удалить</button>
-</form>
-</div>
+
+<br><br><br><br><br><br><br>
+{% if request.session %}
+    <form action="{% url 'cart:delete' %}" method="post">{% csrf_token %}
+        <button type="submit" class="btn-danger">Очистить корзину</button>
+    </form>
+{% endif %}
 
 
 

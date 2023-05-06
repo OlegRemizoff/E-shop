@@ -1,5 +1,38 @@
 $(function() {
 
+	//CART
+
+	$('.add-to-cart').on('click', function (e) {
+
+		e.preventDefault(); // отменяет переход по ссылки
+		const id = $(this).data('id'); // id товара, количество ели есть else :1
+		const type = $(this).data('type');
+		const qty = $('#input-quantity').val() ? $('#input-quantity').val() : 1;
+		const $this = $(this); // текущий объект по которому был клик
+		console.log('id', 'qty');
+	
+	
+		$.ajax({
+			url: '/cart/', //  url на который мы хотим отправить данные 
+	
+			type: 'GET',
+			data: { id: id, type: type, qty: qty },
+			success: function (res) {  // сохраняем ответ в переменную res
+				console.log(res)
+			},
+			error: function () {
+				alert('Error!')
+			}
+	
+		})
+		
+	});
+
+
+	//CART
+
+
+
 	$('.open-search').click(function(e) {
 		e.preventDefault();
 		$('#search').addClass('active');
