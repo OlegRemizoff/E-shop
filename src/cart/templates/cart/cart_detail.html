@@ -9,7 +9,17 @@
 
     <p>{{ item.title }}</p>
     <p>{{ item.price }}</p>
-    <p>{{ item.qty }}</p>
+
+    <form action="{% url 'cart:cart_detail' %}" method="post">
+        {% csrf_token %}
+        <input type="hidden" name="url_from" value="{{ request.path }}">
+
+        <label for="quantity">Кол-во: </label>				
+        <input type="number"  id="quantity" name="quantity" min="1" max="10" value="{{ item.qty }}" style="width: 100px;">
+        <button class="btn btn-danger" type="submit" id="button-addon2">Обновить</button>
+        
+    </form>
+    <!-- <p>{{ item.qty }}</p> -->
 
     <br>
     <form action="{% url 'cart:remove' item.slug %}" method="POST">

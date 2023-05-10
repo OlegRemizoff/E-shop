@@ -18,16 +18,27 @@ def index(request):
         for i in cart:
             current_model = TYPE_MODEL_CLASS[i['type']] # определяем текущую модель
             product = current_model._base_manager.get(id=i['id']) # получаем queryset
+            
+            if request.POST.get('quantity'):
+                qty = request.POST.get('quantity')
+                add_data = { 
+                    'id': product.id,
+                    'slug': product.slug,
+                    'title': product.title,
+                    'price': product.price,
+                    'qty': qty,
 
-            # формируем словарь с нужными данными и добавляем его в список
-            add_data = { 
-                'id': product.id,
-                'slug': product.slug,
-                'title': product.title,
-                'price': product.price,
-                'qty': i['qty']
+                }
+            else:
+                # формируем словарь с нужными данными и добавляем его в список
+                add_data = { 
+                    'id': product.id,
+                    'slug': product.slug,
+                    'title': product.title,
+                    'price': product.price,
+                    'qty': i['qty'],
 
-            }
+                }
             items.append(add_data) 
            # [{'id': 2, 'slug': 'google-pixel-7', 'title': 'Google Pixel 7', 'price': Decimal('59.990'), 'qty': 1}, ...]
 
@@ -89,7 +100,6 @@ def delete_cart(request):
         del request.session['cart']
 
     return redirect('cart:cart_detail')
-
 
 
 
