@@ -41,10 +41,10 @@
 				</ul>
 
 				<div id="product">
-					<div class="input-group mb-3">
+					<!-- <div class="input-group mb-3">
 						<input id="input-quantity" type="text" class="form-control" name="quantity" value="1">
 						<button class="btn btn-danger" type="button" id="button-addon2">Купить</button>
-					</div>
+					</div> -->
 				</div>
 				<div class="product-links">
 					<!-- <a href="#"><i class="fas fa-shopping-cart"></i></a> -->
@@ -52,10 +52,15 @@
 					<form action="{% url 'cart:add' product.category.name  product.id product.slug %}" method="post">
 						{% csrf_token %}
 						<input type="hidden" name="url_from" value="{{ request.path }}">
-						<button type="submit" class="btn-danger">В корзину</button>
+
+						<label for="quantity">Кол-во: </label>				
+						<input type="number"  id="quantity" name="quantity" min="1" max="10" value="{{ item.qty }}" style="width: 100px;">
+						<button class="btn btn-danger" type="submit" id="button-addon2">Купить</button>
+						
 					</form>
 
 				</div>
+				
 
 			</div>
 

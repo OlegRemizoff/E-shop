@@ -46,6 +46,8 @@ def add_to_cart(request, type, id, slug, qty=1):
         item_exists = next(
             (item for item in request.session['cart'] if item['type'] == type and item['id'] == id), False)
 
+        if request.POST.get('quantity'):
+            qty = request.POST.get('quantity')
         add_data = {
             'type': type,
             'id': id,

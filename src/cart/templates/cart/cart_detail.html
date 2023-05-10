@@ -10,11 +10,13 @@
     <p>{{ item.title }}</p>
     <p>{{ item.price }}</p>
     <p>{{ item.qty }}</p>
+
+    <br>
     <form action="{% url 'cart:remove' item.slug %}" method="POST">
         {% csrf_token %}
         <button type="submit" class="btn-danger">Удалить</button>
     </form>
-
+<br><br><hr>
 {% endfor %}
 
 
