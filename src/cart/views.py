@@ -8,6 +8,8 @@ from decimal import Decimal
 def index(request):
     cart = request.session.get('cart') # [{'type': 'Смартфоны', 'id': 3, 'qty': 1, slug: slug}, ]
     items = []
+    total_price = 0
+
     TYPE_MODEL_CLASS = {
         'Смартфоны': SmartPhone,
         'Ноутбуки': Notebook,
@@ -19,7 +21,10 @@ def index(request):
             current_model = TYPE_MODEL_CLASS[i['type']] # определяем текущую модель
             product = current_model._base_manager.get(id=i['id']) # получаем queryset
             product_sum = i['product_sum']
+            if product_sum == 0:
+                product_sum = product.price
 
+            # формируем словарь с нужными данными и добавляем его в список
             if request.POST.get('quantity'):
                 qty = request.POST.get('quantity')
                 add_data = { 
@@ -32,7 +37,6 @@ def index(request):
 
                 }
             else:
-                # формируем словарь с нужными данными и добавляем его в список
                 add_data = { 
                     'id': product.id,
                     'slug': product.slug,
@@ -44,8 +48,10 @@ def index(request):
                 }
             items.append(add_data) 
            # [{'id': 2, 'slug': 'google-pixel-7', 'title': 'Google Pixel 7', 'price': Decimal('59.990'), 'qty': 1}, ...]
+        for i in items:
+            total_price += float(i['product_sum'])       
 
-    return render(request, 'cart/cart_detail.html', {'items': items})
+    return render(request, 'cart/cart_detail.html', {'items': items, 'total_price': total_price})
 
 
 def add_to_cart(request, type, id, slug, qty=1, product_sum=0):
