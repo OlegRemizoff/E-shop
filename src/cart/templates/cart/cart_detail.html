@@ -8,12 +8,13 @@
 {% for item in items %}
 
     <p>{{ item.title }}</p>
-    <p>{{ item.price }}</p>
+    <p>{{ item.product_sum }}</p>
 
     <form action="{% url 'cart:change_quantity' item.slug %}" method="post">
         {% csrf_token %}
         <input type="hidden" name="url_from" value="{{ request.path }}">
-
+        <input type="hidden" name="price" value="{{ item.price }}">
+        
         <label for="quantity">Кол-во: </label>				
         <input type="number"  id="quantity" name="quantity" min="1" max="10" value="{{ item.qty }}" style="width: 100px;">
         <button class="btn btn-danger" type="submit" id="button-addon2">Обновить</button>

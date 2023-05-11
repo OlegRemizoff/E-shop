@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from shop.models import SmartPhone, Notebook
+from decimal import Decimal
 
 # Create your views here.
 
@@ -17,7 +18,8 @@ def index(request):
         for i in cart:
             current_model = TYPE_MODEL_CLASS[i['type']] # определяем текущую модель
             product = current_model._base_manager.get(id=i['id']) # получаем queryset
-            
+            product_sum = i['product_sum']
+
             if request.POST.get('quantity'):
                 qty = request.POST.get('quantity')
                 add_data = { 
@@ -26,6 +28,7 @@ def index(request):
                     'title': product.title,
                     'price': product.price,
                     'qty': qty,
+                    'product_sum': product_sum
 
                 }
             else:
@@ -36,6 +39,7 @@ def index(request):
                     'title': product.title,
                     'price': product.price,
                     'qty': i['qty'],
+                    'product_sum': product_sum
 
                 }
             items.append(add_data) 
@@ -44,7 +48,7 @@ def index(request):
     return render(request, 'cart/cart_detail.html', {'items': items})
 
 
-def add_to_cart(request, type, id, slug, qty=1):
+def add_to_cart(request, type, id, slug, qty=1, product_sum=0):
     if request.method == "POST":
         if not request.session.get('cart'):  # если нет корзины, то создаем ее
             request.session['cart'] = list()  # лист для хранения словарей
@@ -57,12 +61,13 @@ def add_to_cart(request, type, id, slug, qty=1):
             (item for item in request.session['cart'] if item['type'] == type and item['id'] == id), False)
 
         if request.POST.get('quantity'):
-            qty = request.POST.get('quantity')
+            qty = request.POST.get('quantity') # Кол-во из формы detail.html
         add_data = {
             'type': type,
             'id': id,
             'slug': slug,
             'qty': qty,
+            'product_sum': product_sum,
         }
 
         if not item_exists:
@@ -73,10 +78,21 @@ def add_to_cart(request, type, id, slug, qty=1):
 
 
 def change_quantity(request, slug):
+
+    def get_decimal(string):
+        res = string.replace(',', '.')
+        return Decimal(res)
+
     if request.method == 'POST':
+        # получаем данные из формы обновления товара
+        str_price = request.POST.get('price')
+        price = get_decimal(str_price)
+        qty = request.POST.get('quantity')
+  
         for item in request.session['cart']:
             if item['slug'] == slug:
-                item['qty'] = request.POST.get('quantity')
+                item['qty'] = qty
+                item['product_sum'] = str(price * int(qty))
                 request.session.modified = True
     return redirect('cart:cart_detail')
 
