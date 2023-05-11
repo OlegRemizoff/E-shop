@@ -10,7 +10,7 @@
     <p>{{ item.title }}</p>
     <p>{{ item.price }}</p>
 
-    <form action="{% url 'cart:cart_detail' %}" method="post">
+    <form action="{% url 'cart:change_quantity' item.slug %}" method="post">
         {% csrf_token %}
         <input type="hidden" name="url_from" value="{{ request.path }}">
 

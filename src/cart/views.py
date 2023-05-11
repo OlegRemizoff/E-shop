@@ -1,6 +1,5 @@
 from django.shortcuts import render, redirect
 from shop.models import SmartPhone, Notebook
-import json
 
 # Create your views here.
 
@@ -71,7 +70,15 @@ def add_to_cart(request, type, id, slug, qty=1):
             request.session.modified = True
 
     return redirect(request.POST.get('url_from'))
-    # return redirect('shop:home')
+
+
+def change_quantity(request, slug):
+    if request.method == 'POST':
+        for item in request.session['cart']:
+            if item['slug'] == slug:
+                item['qty'] = request.POST.get('quantity')
+                request.session.modified = True
+    return redirect('cart:cart_detail')
 
 
 def remove_from_cart(request, slug):
@@ -108,79 +115,3 @@ def delete_cart(request):
 
 
 
-# from decimal import Decimal
-# from django.conf import settings
-# from shop.models import SmartPhone
-
-
-# class Cart:
-
-#     def __init__(self, request):
-#         '''
-#         Инициализация корзины
-#         '''
-#         self.session = request.session # сохранение текущего сеанса для других методов класса Cart
-#         cart = self.session.get(settings.CART_SESSION_ID)
-#         if not cart:
-#             # сохраняем пустую каозину
-#             cart = self.session[settings.CART_SESSION_ID] = {}
-#         self.cart = cart
-
-#     def add(self, product, quantity=1, override_quantity=False):
-#         """
-#         Добавить товар в корзину либо обновить его количество.
-#         """
-#         product_id = str(product.id)
-#         if product_id not in self.cart:
-#             self.cart[product_id] = {'quantity': 0,
-#                                      'price': str(product.price)}
-#         if override_quantity:
-#             self.cart[product_id]['quantity'] = quantity
-#         else:
-#             self.cart[product_id]['quantity'] += quantity
-#         self.save()
-
-#     def remove(self, product):
-#         """
-#         Удалить товар из корзины
-#         """
-#         product_id = str(product.id)
-#         if product_id in self.cart:
-#             del self.cart[product_id]
-#             self.save()
-
-
-#     def save(self):
-#         # пометить сеанс как "измененный",
-#         # чтобы обеспечить его сохранение
-#         self.session.modified = True
-
-#     def __iter__(self):
-#         """"
-#         Прокрутить товарные позиции корзины в цикле и
-#         получить товары из базы данных.
-#         """
-#         product_ids = self.cart.keys() # получаем все экземпляры класса Product(SmartPhone)
-#         products = SmartPhone.objects.filter(id__in=product_ids)
-#         cart = self.cart.copy() # Текущая корзина копируется в переменную cart
-
-#         for product in products:
-#             cart[str(product.id)]['product'] = product # и в нее добавляются экземпляры класса Product
-#         for item in cart.values():
-#             item['price'] = Decimal(item['price']) # Конвертируем цену каждого товара
-#             item['total_price'] = item['price'] * item['quantity'] # +аттрибут total в каждый товар
-#             yield item
-
-#     def __len__(self):
-#         """
-#         Подсчитать все товары в корзине
-#         """
-#         return sum(item['quantity'] for item in self.cart.values()) # values() - возвращает ключи
-
-#     def get_total_price(self):
-#         return sum(Decimal(item['price']) * item['quantity'] for item in self.cart.values())
-
-#     def clear(self):
-#         # удалить корзину из сеанса
-#         del self.session[settings.CART_SESSION_ID]
-#         self.save()
