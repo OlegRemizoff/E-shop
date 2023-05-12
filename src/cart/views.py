@@ -31,6 +31,7 @@ def index(request):
                     'id': product.id,
                     'slug': product.slug,
                     'title': product.title,
+                    'image': product.image,
                     'price': product.price,
                     'qty': qty,
                     'product_sum': product_sum
@@ -41,6 +42,7 @@ def index(request):
                     'id': product.id,
                     'slug': product.slug,
                     'title': product.title,
+                    'image': product.image,
                     'price': product.price,
                     'qty': i['qty'],
                     'product_sum': product_sum
@@ -124,11 +126,7 @@ def remove_from_cart(request, slug):
     return redirect('cart:cart_detail')
 
 
-def delete_cart(request):
-    if request.session.get('cart'):
-        del request.session['cart']
 
-    return redirect('cart:cart_detail')
 
 
 
