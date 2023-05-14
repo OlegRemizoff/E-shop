@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.views.generic import View, DetailView
+from django.views.generic import View, DetailView, TemplateView
 
 from .models import LatestProducts, Notebook, SmartPhone
 
@@ -48,3 +48,19 @@ class ProductByCategoryView(View):
         category_model = self.CATEGORY_MODEL_CLASS[kwargs['pk']]
         category = category_model._base_manager.all()
         return render(request, 'shop/category_list.html', {'category': category})
+
+
+class Search(TemplateView):
+    template_name = 'shop/search.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['phone'] = SmartPhone.objects.filter(title__icontains=self.request.GET.get('s'))
+        context['note'] = Notebook.objects.filter(title__icontains=self.request.GET.get('s'))
+        # context['s'] = f"s={self.request.GET.get('s')}&" # для пагинации
+        return context
+
+
+
+
+
