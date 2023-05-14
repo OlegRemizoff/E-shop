@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.views.generic import View, DetailView, TemplateView
+from django.core.paginator import Paginator
 
 from .models import LatestProducts, Notebook, SmartPhone
 
@@ -47,7 +48,11 @@ class ProductByCategoryView(View):
         # pk = kwargs.get('id')
         category_model = self.CATEGORY_MODEL_CLASS[kwargs['pk']]
         category = category_model._base_manager.all()
-        return render(request, 'shop/category_list.html', {'category': category})
+
+        paginator = Paginator(category, 3)
+        page_number = request.GET.get('page', 1)
+        page_obj = paginator.get_page(page_number)
+        return render(request, 'shop/category_list.html', {'page_obj': page_obj})
 
 
 class Search(TemplateView):
