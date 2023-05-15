@@ -1,5 +1,8 @@
 {% extends 'base.html' %}
 
+{% block title %}
+{{ block.super }}| {{ product.category }}|{{ product.title }}
+{% endblock %}
 
 {% block content %}
 
@@ -9,9 +12,9 @@
 	<div class="container">
 		<nav aria-label="breadcrumb">
 			<ol class="breadcrumb bg-light p-2">
-				<li class="breadcrumb-item"><a href="index.html"><i class="fas fa-home"></i></a></li>
-				<li class="breadcrumb-item"><a href="#">Ноутбуки</a></li>
-				<li class="breadcrumb-item active" aria-current="page">MacBook</li>
+				<li class="breadcrumb-item"><a href="{% url 'shop:home' %}"><i class="fas fa-home"></i></a></li>
+				<li class="breadcrumb-item"><a href="#">{{ product.category }}</a></li>
+				<li class="breadcrumb-item active" aria-current="page">{{ product.title }}</li>
 			</ol>
 		</nav>
 	</div>
@@ -22,7 +25,7 @@
 
 			<div class="col-md-4 order-md-2">
 				
-				<h1>MacBook</h1>
+				<h1>{{ product.title }}</h1>
 
                 <h6>Коротко о товаре: </h6>
                 {% if product.category.slug == 'smartphones' %}
