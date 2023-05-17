@@ -29,4 +29,4 @@ class OrderPhoneItem(models.Model):
     quantity = models.PositiveIntegerField(default=1)
     
     def __str__(self):
-        return self.id
+        return str(self.id)

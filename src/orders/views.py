@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from shop.models import SmartPhone, Notebook
+from .models import Order, OrderPhoneItem
+from .forms import OrderCreateForm
 
 
 # Create your views here.
@@ -24,31 +26,55 @@ def order_create(request):
             
             query.append(product)
 
+            if product_sum == 0:
+                product_sum = product.price
 
-        # if request.method == 'POST':
-        #     form = OrderCreateForm(request.POST)
-        #     if form.is_valid():
-        #         order = form.save()
-        #         for item in query:
-        #             print(type(item))
-        #             print(item)
-        #             OrderItem.objects.create(order=order,
-        #                                  phone=item,
-        #                                  price=item.price)
-        #         return render(request, 'orders/create.html', {'order': order, 'form': form})
+            qty = i['qty']
+            if request.POST.get('quantity'):
+                qty = request.POST.get('quantity')
 
-        # else:
-        #     form = OrderCreateForm()
-        #     return render(request, 'orders/create.html', {'form': form})
+            add_data = { 
+                'id': product.id,
+                'slug': product.slug,
+                'title': product.title,
+                'image': product.image,
+                'price': product.price,
+                'qty': qty,
+                'product_sum': product_sum
 
-
-
+            }
 
 
+            items.append(add_data) 
+            # [{'id': 2, 'slug': 'google-pixel-7', 'title': 'Google Pixel 7', 'price': Decimal('59.990'), 'qty': 1}, ...]
+
+        for i in items:
+            total_price += float(i['product_sum']) 
+
+
+            ### форма заказа ###
+            form = OrderCreateForm(request.POST)
+            if form.is_valid():
+                order = form.save()
+                for item in query:
+                    OrderPhoneItem.objects.create(order=order,
+                                         phone=item,
+                                         quantity=qty,
+                                         price=item.price)
+                return render(request, 'orders/create.html', {'order': order, 'form': form})
+
+        else:
+            form = OrderCreateForm()
+            return render(request, 'orders/create.html', {'form': form})
 
 
 
 
+
+
+
+
+# <class 'shop.models.SmartPhone'>
 
             # if request.method == 'POST':
             #     form = OrderCreateForm(request.POST)
@@ -80,34 +106,34 @@ def order_create(request):
 
 
 
-'''
-            query.append(product)
-            print("\x1b[31;1m" + 'Query' + "\x1b[0m", query)
 
-            if product_sum == 0:
-                product_sum = product.price
+        #     query.append(product)
+        #     print("\x1b[31;1m" + 'Query' + "\x1b[0m", query)
 
-            qty = i['qty']
-            if request.POST.get('quantity'):
-                qty = request.POST.get('quantity')
+        #     if product_sum == 0:
+        #         product_sum = product.price
 
-            add_data = { 
-                'id': product.id,
-                'slug': product.slug,
-                'title': product.title,
-                'image': product.image,
-                'price': product.price,
-                'qty': qty,
-                'product_sum': product_sum
+        #     qty = i['qty']
+        #     if request.POST.get('quantity'):
+        #         qty = request.POST.get('quantity')
 
-            }
+        #     add_data = { 
+        #         'id': product.id,
+        #         'slug': product.slug,
+        #         'title': product.title,
+        #         'image': product.image,
+        #         'price': product.price,
+        #         'qty': qty,
+        #         'product_sum': product_sum
+
+        #     }
 
 
-            items.append(add_data) 
-            # [{'id': 2, 'slug': 'google-pixel-7', 'title': 'Google Pixel 7', 'price': Decimal('59.990'), 'qty': 1}, ...]
+        #     items.append(add_data) 
+        #     # [{'id': 2, 'slug': 'google-pixel-7', 'title': 'Google Pixel 7', 'price': Decimal('59.990'), 'qty': 1}, ...]
 
-        for i in items:
-            total_price += float(i['product_sum'])    
+        # for i in items:
+        #     total_price += float(i['product_sum'])    
 
 
         ### Форма заказа ###   
@@ -124,6 +150,6 @@ def order_create(request):
             form = OrderCreateForm()
 
         return render(request, 'orders/create.html', {'form': form})
-'''
+
 
 
