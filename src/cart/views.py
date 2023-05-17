@@ -25,7 +25,7 @@ def cart(request):
             if product_sum == 0:
                 product_sum = product.price
 
-            qty = 1
+            qty = i['qty']
             if request.POST.get('quantity'):
                 qty = request.POST.get('quantity')
 
