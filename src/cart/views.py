@@ -81,14 +81,14 @@ def add_to_cart(request, type, id, slug, qty=1, product_sum=0):
 
 def change_quantity(request, slug):
 
-    def get_decimal(string):
-        res = string.replace(',', '.')
-        return Decimal(res)
+    # def get_decimal(string):
+    #     res = string.replace(',', '.')
+    #     return Decimal(res)
 
     if request.method == 'POST':
         # получаем данные из формы обновления товара
         str_price = request.POST.get('price')
-        price = get_decimal(str_price)
+        price = str_price
         qty = request.POST.get('quantity')
   
         for item in request.session['cart']:

@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from shop.models import SmartPhone, Notebook
-from .models import  OrderPhoneItem, OrderNoteItem
+from .models import  OrderItem
 from .forms import OrderCreateForm
 from decimal import Decimal
 
@@ -10,6 +10,8 @@ from decimal import Decimal
 
 
 def order_create(request):
+    pass
+
     cart = request.session.get('cart') # [{'type': 'Смартфоны', 'id': 3, 'qty': 1, slug: slug}, ]
     items = []  # для корзины
     query = {}  # для заказа
@@ -72,12 +74,12 @@ def order_create(request):
         for item in order_items:
             product = item[0]
             if product.category.id == 1:
-                OrderNoteItem.objects.create(order=order,
+                OrderItem.objects.create(order=order,
                                     note=product,
                                     quantity=item[1],
                                     price=product.price * Decimal(item[1]))
             else:
-                OrderPhoneItem.objects.create(order=order,
+                OrderItem.objects.create(order=order,
                                     phone=product,
                                     quantity=item[1],
                                     price=product.price * Decimal(item[1]))

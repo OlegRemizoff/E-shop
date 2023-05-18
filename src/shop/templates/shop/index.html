@@ -62,7 +62,7 @@
 							<h4><a href="{{ item.get_absolute_url }}">{{ item.title }}</a></h4>
 							<p>{{ item.description }}</p>
 							<div class="product-bottom-details d-flex justify-content-between">
-								<div class="product-price">{{ item.price }} &#8381;</div>
+								<div class="product-price">{{ item.price|floatformat:0 }} &#8381;</div>
 								<div class="product-links">
 									<a class="add-to-cart" href="/cart/" data-id="{{ item.id }}"><i class="fas fa-shopping-cart"></i></a>
 									<a href="#"><i class="far fa-heart"></i></a>

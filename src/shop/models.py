@@ -43,13 +43,13 @@ class Product(models.Model):
     title = models.CharField("Наименование", max_length=255)
     slug = models.SlugField("URL", unique=True)
     image = models.ImageField('Изображение', blank=True, upload_to='img/')
-    price = models.DecimalField(
-        'Цена', max_digits=9, decimal_places=3, default=0.00)
+    price = models.FloatField('Цена', default=0.00)
     description = models.TextField('Описание', blank=True)
     digital = models.BooleanField(default=False, null=True, blank=True)
     available = models.BooleanField('Доступен', default=True)
     category = models.ForeignKey(
         Category, on_delete=models.CASCADE, verbose_name="Категория")
+    color = models.CharField('Цвет', max_length=100)
 
     class Meta:
         abstract = True

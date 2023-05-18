@@ -1,23 +1,21 @@
 from django.contrib import admin
-from .models import Order, OrderPhoneItem, OrderNoteItem
+from .models import Order, OrderItem
 
 # Register your models here.
 
 
 
-class OrderPhoneItemInline(admin.TabularInline):
+class OrderItemInline(admin.TabularInline):
 # Атрибут inlines позволяет вставлять мо-дель в ту же страницу редактирования,
 #                                               что и связанная с ней модель
-    model = OrderPhoneItem
-    raw_id_fields = ['phone']
-    verbose_name_plural = "Смартфоны"
+    model = OrderItem
+    fields = ['phone', 'note', 'price']
+    extra = 0
+    raw_id_fields = ['phone', 'note']
+ 
+    verbose_name_plural = "Товары"
 
 
-class OrderNoteItemInline(admin.TabularInline):
-
-    model = OrderNoteItem
-    raw_id_fields = ['note']
-    verbose_name_plural = "Ноутбуки"
 
 
 
@@ -26,7 +24,7 @@ class OrderAdmin(admin.ModelAdmin):
     list_display = ['id', 'first_name', 'last_name', 'email',
                     'address','city', 'paid','created', 'updated']
     list_filter = ['paid', 'created', 'updated']
-    inlines = [OrderPhoneItemInline, OrderNoteItemInline]
+    inlines = [OrderItemInline]
 
 
 
