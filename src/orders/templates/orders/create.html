@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block title %}
-  {{ block.super }}|Оформление заказа
+{{ block.super }}|Оформление заказа
 {% endblock %}
 
 
@@ -10,30 +10,11 @@
 
 
 
-
-<form method="post" class="order-form">
-
-  {{ form }}
-
-
-<p><input type="submit" value="Place order"></p>
-{% csrf_token %}
-</form>
-
-
-
-
-
-
-
-
-
-{% comment %}
 <div class="row">
   <section class="h-100" style="background-color: #eee;">
     <div class="container h-100 py-5">
       <div class="row d-flex justify-content-center align-items-center h-100">
-          <!-- <div class="col-md-4">
+        <!-- <div class="col-md-4">
             <div class="alert alert-success alert-dismissible fade show" role="alert">
               <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Закрыть"></button>
             </div>
@@ -49,12 +30,11 @@
             <div class="card-body p-4">
               <div class="row d-flex justify-content-between align-items-center">
                 <div class="col-md-2 col-lg-2 col-xl-2">
-                  <img src="{{ item.image.url }}"
-                    class="img-fluid rounded-3" alt="Cotton T-shirt">
+                  <img src="{{ item.image.url }}" class="img-fluid rounded-3" alt="Cotton T-shirt">
                 </div>
                 <div class="col-md-3 col-lg-3 col-xl-3">
                   <p>Наименование</p>
-                    {{ item.title }}
+                  {{ item.title }}
                   </a></p>
                   <p><span class="text-muted"></span><span class="text-muted">Color: </span>Grey</p>
                 </div>
@@ -64,9 +44,9 @@
                   <form action="#">
                     {% csrf_token %}
                     <input type="hidden" name="price" value="{{ item.price }}">
-                    
+
                     <label for="quantity">Кол-во: <strong>{{ item.qty }}шт</strong> </label>
-                    
+
                   </form>
                 </div>
                 <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
@@ -82,45 +62,25 @@
           <div class="card mb-5">
             <div class="card-body p-4">
               <div class="float-end">
-                  <h5 class="mb-0">Итого: {{ total_price }} &#8381;</h5>                  
+                <h5 class="mb-0">К оплате: {{ total_price }} &#8381;</h5>
               </div>
             </div>
           </div>
           <div class="d-flex justify-content-end">
-            <!-- <div class="modal-footer">
-              <a href="#">
-                <button type="button" class="btn btn-primary">Оплатить заказ</button>
-              </a>
-            </div> -->
           </div>
-          <form method="post" class="order-form">
+          <form method="post" class="order-form">{% csrf_token %}
 
-              {{ form }}
+            {{ form }}
 
-
-            <p><input type="submit" value="Place order"></p>
-            {% csrf_token %}
+            <button type="submit" class="btn btn-primary">Оплатить</button>
           </form>
         </div>
       </div>
     </div>
   </section>
 </div>
-{% endcomment %}
+
 
 
 </div>
 {% endblock content %}
-
-
-
-
-
-
-
-
-
-
-
-
-

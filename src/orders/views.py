@@ -1,31 +1,33 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.contrib import messages
 from shop.models import SmartPhone, Notebook
-from .models import Order, OrderPhoneItem
+from .models import  OrderPhoneItem, OrderNoteItem
 from .forms import OrderCreateForm
+from decimal import Decimal
 
 
 # Create your views here.
 
 
 def order_create(request):
-    cart = request.session.get('cart')
-    items = []
+    cart = request.session.get('cart') # [{'type': 'Смартфоны', 'id': 3, 'qty': 1, slug: slug}, ]
+    items = []  # для корзины
+    query = {}  # для заказа
     total_price = 0
-    query = []
 
     TYPE_MODEL_CLASS = {
         'Смартфоны': SmartPhone,
         'Ноутбуки': Notebook,
     }
-    if cart:
 
+    if cart:
+        # print("\x1b[31;1m" + 'CART' + "\x1b[0m", cart)
         for i in cart:
-            current_model = TYPE_MODEL_CLASS[i['type']] 
-            product = current_model._base_manager.get(id=i['id']) 
+            current_model = TYPE_MODEL_CLASS[i['type']] # определяем текущую модель
+            product = current_model._base_manager.get(id=i['id']) # получаем queryset
             product_sum = i['product_sum']
             
-            query.append(product)
-
+            
             if product_sum == 0:
                 product_sum = product.price
 
@@ -33,6 +35,11 @@ def order_create(request):
             if request.POST.get('quantity'):
                 qty = request.POST.get('quantity')
 
+
+            query[product] = qty
+
+
+            # словарь для корзины
             add_data = { 
                 'id': product.id,
                 'slug': product.slug,
@@ -46,51 +53,47 @@ def order_create(request):
 
 
             items.append(add_data) 
-            # [{'id': 2, 'slug': 'google-pixel-7', 'title': 'Google Pixel 7', 'price': Decimal('59.990'), 'qty': 1}, ...]
 
         for i in items:
             total_price += float(i['product_sum']) 
+ 
+
+        order_items = query.items()
+        # for item in order_items:
+        #     product = item[0]
+        #     qty = item[1]
+        #     print("\x1b[31;1m" + 'product' + "\x1b[0m", product.price * Decimal(qty))
+
+       
+    ### форма заказа ###
+    form = OrderCreateForm(request.POST)
+    if form.is_valid():
+        order = form.save()
+        for item in order_items:
+            product = item[0]
+            if product.category.id == 1:
+                OrderNoteItem.objects.create(order=order,
+                                    note=product,
+                                    quantity=item[1],
+                                    price=product.price * Decimal(item[1]))
+            else:
+                OrderPhoneItem.objects.create(order=order,
+                                    phone=product,
+                                    quantity=item[1],
+                                    price=product.price * Decimal(item[1]))
+                
+        del request.session['cart']      
+        messages.success(request, 'Оплата завершена !')      
+        return redirect('cart:cart_detail')
+
+    else:
+        form = OrderCreateForm()
+        return render(request, 'orders/create.html', {'form': form,
+                                                        'items': items,
+                                                        'total_price': total_price})
 
 
-            ### форма заказа ###
-            form = OrderCreateForm(request.POST)
-            if form.is_valid():
-                order = form.save()
-                for item in query:
-                    OrderPhoneItem.objects.create(order=order,
-                                         phone=item,
-                                         quantity=qty,
-                                         price=item.price)
-                return render(request, 'orders/create.html', {'order': order, 'form': form})
-
-        else:
-            form = OrderCreateForm()
-            return render(request, 'orders/create.html', {'form': form})
-
-
-
-
-
-
-
-
-# <class 'shop.models.SmartPhone'>
-
-            # if request.method == 'POST':
-            #     form = OrderCreateForm(request.POST)
-            #     if form.is_valid():
-            #         order = form.save()
-            #         for item in product:
-            #             OrderItem.objects.create(order=order,
-            #                                  product=item['note'])
-            #         return render(request, 'orders/create.html', {'order': order})
-
-            #     else:
-            #         form = OrderCreateForm()
-            #         return render(request, 'orders/create.html', {'form': form})
-
-        
-
+    
 
 
 
@@ -107,49 +110,22 @@ def order_create(request):
 
 
 
-        #     query.append(product)
-        #     print("\x1b[31;1m" + 'Query' + "\x1b[0m", query)
-
-        #     if product_sum == 0:
-        #         product_sum = product.price
-
-        #     qty = i['qty']
-        #     if request.POST.get('quantity'):
-        #         qty = request.POST.get('quantity')
-
-        #     add_data = { 
-        #         'id': product.id,
-        #         'slug': product.slug,
-        #         'title': product.title,
-        #         'image': product.image,
-        #         'price': product.price,
-        #         'qty': qty,
-        #         'product_sum': product_sum
-
-        #     }
 
 
-        #     items.append(add_data) 
-        #     # [{'id': 2, 'slug': 'google-pixel-7', 'title': 'Google Pixel 7', 'price': Decimal('59.990'), 'qty': 1}, ...]
-
-        # for i in items:
-        #     total_price += float(i['product_sum'])    
 
 
-        ### Форма заказа ###   
-        if request.method == 'POST':
-            form = OrderCreateForm(request.POST)
-            if form.is_valid():
-                order = form.save()
-                for item in query:
-                    OrderItem.objects.create(order=order,
-                                             product=item['note'])
-                return render(request, 'orders/create.html', {'order': order})
-    # Query [<SmartPhone: Смартфоны Xiaomi POCO X4 Pro 5G 8>, <SmartPhone: Смартфоны Google Pixel 7>]
-        else:
-            form = OrderCreateForm()
 
-        return render(request, 'orders/create.html', {'form': form})
+
+
+
+
+
+# print("\x1b[31;1m" + 'Type' + "\x1b[0m", type(item.category.id))
+
+
+
+
+  
 
 
 

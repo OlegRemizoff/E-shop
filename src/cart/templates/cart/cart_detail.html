@@ -11,12 +11,17 @@
   <section class="h-100" style="background-color: #eee;">
     <div class="container h-100 py-5">
       <div class="row d-flex justify-content-center align-items-center h-100">
-          <!-- <div class="col-md-4">
+
+        {% if messages %}
+          {% for m in  messages %}
+          <div class="col-md-10">
             <div class="alert alert-success alert-dismissible fade show" role="alert">
+              {{ m }}
               <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Закрыть"></button>
             </div>
-          </div> -->
-
+          </div>
+          {% endfor %}
+        {% endif %}
 
         <div class="col-10">
           <div class="d-flex justify-content-between align-items-center mb-4">
@@ -81,9 +86,13 @@
               <a href="{% url 'shop:home' %}">
               <button type="button" class="btn btn-danger">Продолжить покупки</button>
               </a>
-              <a href="{% url 'orders:order_create' %}">
-                <button type="button" class="btn btn-primary">Оформить заказ</button>
-              </a>
+              {% if not product_count %}
+
+              {% else %}
+                <a href="{% url 'orders:order_create' %}">
+                  <button type="button" class="btn btn-primary">Оформить заказ</button>
+                </a>
+              {% endif %}
             </div>
           </div>
           

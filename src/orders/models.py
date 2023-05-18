@@ -3,10 +3,8 @@ from shop.models import SmartPhone, Notebook
 
 
 
-
-
-
 class Order(models.Model):
+
     first_name = models.CharField('Имя', max_length=50)
     last_name = models.CharField('Фамилия', max_length=50)
     email = models.EmailField()
@@ -21,12 +19,27 @@ class Order(models.Model):
         indexes = [models.Index(fields=['-created']), ]
         
 
+
 class OrderPhoneItem(models.Model):
     
-    order = models.ForeignKey(Order, related_name='items', on_delete=models.CASCADE)
-    phone = models.ForeignKey(SmartPhone, related_name='order_items', on_delete=models.CASCADE)
-    price = models.DecimalField(max_digits=10,  decimal_places=3)
-    quantity = models.PositiveIntegerField(default=1)
+    order = models.ForeignKey(Order, related_name='phone', on_delete=models.CASCADE)
+    phone = models.ForeignKey(SmartPhone, related_name='order_phone',
+                               on_delete=models.CASCADE, verbose_name="Телефон")
+    price = models.DecimalField(max_digits=10,  decimal_places=3, verbose_name="Цена")
+    quantity = models.PositiveIntegerField(default=1, verbose_name="Кол-во")
+    
+    def __str__(self):
+        return str(self.id)
+    
+
+
+class OrderNoteItem(models.Model):
+    
+    order = models.ForeignKey(Order, related_name='note', on_delete=models.CASCADE)
+    note = models.ForeignKey(Notebook, related_name='order_note',
+                              on_delete=models.CASCADE, verbose_name="Ноутбук")
+    price = models.DecimalField(max_digits=10,  decimal_places=3, verbose_name="Цена")
+    quantity = models.PositiveIntegerField(default=1, verbose_name="Кол-во")
     
     def __str__(self):
         return str(self.id)
