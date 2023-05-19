@@ -3,7 +3,7 @@ from django.contrib import messages
 from shop.models import SmartPhone, Notebook
 from .models import  OrderItem
 from .forms import OrderCreateForm
-from decimal import Decimal
+
 
 
 # Create your views here.
@@ -73,16 +73,17 @@ def order_create(request):
         order = form.save()
         for item in order_items:
             product = item[0]
+            qty = int(item[1])
             if product.category.id == 1:
                 OrderItem.objects.create(order=order,
                                     note=product,
-                                    quantity=item[1],
-                                    price=product.price * Decimal(item[1]))
+                                    quantity=qty,
+                                    price=product.price * qty)
             else:
                 OrderItem.objects.create(order=order,
                                     phone=product,
-                                    quantity=item[1],
-                                    price=product.price * Decimal(item[1]))
+                                    quantity=qty,
+                                    price=product.price * qty)
                 
         del request.session['cart']      
         messages.success(request, 'Оплата завершена !')      

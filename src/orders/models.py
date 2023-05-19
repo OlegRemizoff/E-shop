@@ -28,7 +28,7 @@ class OrderItem(models.Model):
     note = models.ForeignKey(Notebook, related_name='order_note',
                                on_delete=models.CASCADE, verbose_name="Ноутбук", blank=True, null=True)
     
-    price = models.DecimalField(max_digits=10,  decimal_places=3, verbose_name="Цена")
+    price = models.DecimalField(max_digits=10,  decimal_places=2, verbose_name="Цена")
     quantity = models.PositiveIntegerField(default=1, verbose_name="Кол-во")
     
     def __str__(self):
