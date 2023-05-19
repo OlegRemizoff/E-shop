@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load humanize %}
 
 {% block title %}
 {{ block.super }}|Оформление заказа
@@ -51,7 +52,7 @@
                 </div>
                 <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
                   <p>Цена</p>
-                  <h5 class="mb-0">{{ item.product_sum|floatformat:3 }} &#8381;</span></h5>
+                  <h5 class="mb-0">{{ item.product_sum|floatformat:0|intcomma  }} &#8381;</span></h5>
                 </div>
 
 
@@ -62,7 +63,7 @@
           <div class="card mb-5">
             <div class="card-body p-4">
               <div class="float-end">
-                <h5 class="mb-0">К оплате: {{ total_price }} &#8381;</h5>
+                <h5 class="mb-0">К оплате: {{ total_price|floatformat:0|intcomma }} &#8381;</h5>
               </div>
             </div>
           </div>

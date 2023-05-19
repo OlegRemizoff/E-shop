@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from shop.models import SmartPhone, Notebook
-from decimal import Decimal
+
 
 # Create your views here.
 
@@ -25,22 +25,32 @@ def cart(request):
             if product_sum == 0:
                 product_sum = product.price
 
-            qty = i['qty']
+            # qty = i['qty']
             if request.POST.get('quantity'):
                 qty = request.POST.get('quantity')
 
-            # формируем словарь с нужными данными и добавляем его в список
-            add_data = { 
-                'id': product.id,
-                'slug': product.slug,
-                'title': product.title,
-                'image': product.image,
-                'price': product.price,
-                'qty': qty,
-                'product_sum': product_sum
+                # формируем словарь с нужными данными и добавляем его в список
+                add_data = { 
+                    'id': product.id,
+                    'slug': product.slug,
+                    'title': product.title,
+                    'image': product.image,
+                    'price': product.price,
+                    'qty': qty,
+                    'product_sum': product_sum
 
-            }
+                }
+            else:
+                    add_data = { 
+                    'id': product.id,
+                    'slug': product.slug,
+                    'title': product.title,
+                    'image': product.image,
+                    'price': product.price,
+                    'qty': i['qty'],
+                    'product_sum': product_sum
 
+                }
 
             items.append(add_data) 
            # [{'id': 2, 'slug': 'google-pixel-7', 'title': 'Google Pixel 7', 'price': Decimal('59.990'), 'qty': 1}, ...]
@@ -82,13 +92,15 @@ def add_to_cart(request, type, id, slug, qty=1, product_sum=0):
 def change_quantity(request, slug):
 
     def get_float(string):
-        res = string.replace(',', '')
-        return Decimal(res)
+        res = string[:-2]
+        return float(res)
 
     if request.method == 'POST':
         # получаем данные из формы обновления товара
         str_price = request.POST.get('price')
         price = get_float(str_price)
+        print(str_price)
+        print(price)
         qty = request.POST.get('quantity')
   
         for item in request.session['cart']:

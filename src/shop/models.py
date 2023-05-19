@@ -63,13 +63,13 @@ class Product(models.Model):
 
 class SmartPhone(Product):
     '''Смартфоны'''
-    os = models.CharField('Операционная система', max_length=255, blank=True)
     display = models.CharField('Экран', max_length=255, blank=True)
-    camera = models.CharField('Камера', max_length=255, blank=True)
     memory = models.CharField('Память', max_length=255, blank=True)
+    camera = models.CharField('Камера', max_length=255, blank=True)
     battery = models.CharField('Аккумулятор', max_length=255, blank=True)
     cpu = models.CharField('Процессор', max_length=255, blank=True)
     sim = models.CharField('SIM-карты', max_length=255, blank=True)
+    os = models.CharField('Операционная система', max_length=255, blank=True)
     communication = models.CharField(
         'Стандарты связи', max_length=255, blank=True)
     weight = models.CharField('Вес', max_length=255, blank=True)
