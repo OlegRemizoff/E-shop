@@ -59,13 +59,33 @@ class ProductByCategoryView(View):
 
 class Search(TemplateView):
     template_name = 'shop/search.html'
+    products = []
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['phone'] = SmartPhone.objects.filter(title__icontains=self.request.GET.get('s'))
-        context['note'] = Notebook.objects.filter(title__icontains=self.request.GET.get('s'))
-        # context['s'] = f"s={self.request.GET.get('s')}&" # для пагинации
+        phone = SmartPhone.objects.filter(title__icontains=self.request.GET.get('s'))
+        note = Notebook.objects.filter(title__icontains=self.request.GET.get('s'))
+
+        self.products.clear()
+        self.products.extend(note) 
+        self.products.extend(phone) 
+
+        context['products'] = self.products
         return context
+
+
+
+
+
+
+
+
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     context['phone'] = SmartPhone.objects.filter(title__icontains=self.request.GET.get('s'))
+    #     context['note'] = Notebook.objects.filter(title__icontains=self.request.GET.get('s'))
+    #     # context['s'] = f"s={self.request.GET.get('s')}&" # для пагинации
+    #     return context
 
 
 
