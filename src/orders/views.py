@@ -48,6 +48,7 @@ def order_create(request):
                 'slug': product.slug,
                 'title': product.title,
                 'image': product.image,
+                'color': product.color,
                 'price': product.price,
                 'qty': qty,
                 'product_sum': product_sum
