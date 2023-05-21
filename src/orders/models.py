@@ -1,5 +1,5 @@
 from django.db import models
-from shop.models import SmartPhone, Notebook
+from shop.models import SmartPhone, Notebook, Tv
 
 
 
@@ -22,11 +22,13 @@ class Order(models.Model):
 
 class OrderItem(models.Model):
     
-    order = models.ForeignKey(Order, related_name='phone', on_delete=models.CASCADE)
+    order = models.ForeignKey(Order, related_name='items', on_delete=models.CASCADE)
     phone = models.ForeignKey(SmartPhone, related_name='order_phone',
                                on_delete=models.CASCADE, verbose_name="Телефон", blank=True, null=True)
     note = models.ForeignKey(Notebook, related_name='order_note',
                                on_delete=models.CASCADE, verbose_name="Ноутбук", blank=True, null=True)
+    tv = models.ForeignKey(Tv, related_name='order_tv',
+                               on_delete=models.CASCADE, verbose_name="Телевизор", blank=True, null=True)
     
     price = models.DecimalField(max_digits=10,  decimal_places=2, verbose_name="Цена")
     quantity = models.PositiveIntegerField(default=1, verbose_name="Кол-во")

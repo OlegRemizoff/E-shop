@@ -31,6 +31,8 @@
                 <h6>Коротко о товаре: </h6>
                 {% if product.category.slug == 'smartphones' %}
                     {% include 'inc/_smartphone_specification.html' %}
+				{% elif product.category.slug == 'televizory' %}
+					{% include 'inc/_tv_specification.html' %}
 				{% else %}
 				{% include 'inc/_notebook_specification.html' %}
                 {% endif %}

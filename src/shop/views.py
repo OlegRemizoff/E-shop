@@ -3,7 +3,7 @@ from django.views.generic import View, DetailView, TemplateView
 from django.core.paginator import Paginator
 import random
 
-from .models import LatestProducts, Notebook, SmartPhone
+from .models import LatestProducts, Notebook, SmartPhone, Tv
 
 
 # Create your views here.
@@ -13,7 +13,7 @@ class HomeView(View):
 
     def get(self, request, *args, **kwargs):
         products = LatestProducts.objects.get_products_for_main_page(
-            "smartphone", "notebook")
+            "smartphone", "notebook", 'tv')
         random.shuffle(products)
         return render(request, 'shop/index.html', {"products": products})
 
@@ -23,6 +23,7 @@ class ProductDetailView(DetailView):
     MODEL_MODEL_CLASS = {
         "notebooks": Notebook,
         "smartphones": SmartPhone,
+        "televizory": Tv,
     }
 
     def dispatch(self, request, *args, **kwargs):
@@ -43,6 +44,7 @@ class ProductByCategoryView(View):
     CATEGORY_MODEL_CLASS = {
         1: Notebook,
         2: SmartPhone,
+        3: Tv,
 
     }
 

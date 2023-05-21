@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from shop.models import SmartPhone, Notebook
+from shop.models import SmartPhone, Notebook, Tv
 
 
 # Create your views here.
@@ -13,6 +13,7 @@ def cart(request):
     TYPE_MODEL_CLASS = {
         'Смартфоны': SmartPhone,
         'Ноутбуки': Notebook,
+        'Телевизоры': Tv,
     }
 
     if cart:

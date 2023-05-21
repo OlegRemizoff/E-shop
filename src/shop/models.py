@@ -50,6 +50,7 @@ class Product(models.Model):
     category = models.ForeignKey(
         Category, on_delete=models.CASCADE, verbose_name="Категория")
     color = models.CharField('Цвет', max_length=100)
+    year = models.IntegerField('Год', blank=True, null=True)
 
     class Meta:
         abstract = True
@@ -95,6 +96,26 @@ class Notebook(Product):
     class Meta:
         verbose_name = 'Ноутбук'
         verbose_name_plural = 'Ноутбуки'
+
+    def __str__(self):
+        return f'{self.category.name} {self.title}'
+
+
+class Tv(Product):
+    "Телевизоры"
+    diagonal = models.CharField('Диагональ', max_length=255, blank=True)
+    resolution = models.CharField('Разрешение', max_length=255, blank=True)
+    display_type = models.CharField('Технология экрана', max_length=255, blank=True)
+    frequency = models.CharField('Частота обновления', max_length=255, blank=True)
+    brightness = models.CharField('Яркость', max_length=255, blank=True)
+    interfaces = models.CharField('Разъёмы и нтерфейсы', max_length=255, blank=True)
+    wireless =  models.CharField('Беспроводные интерфейсы', max_length=255, blank=True)
+    smart_tv = models.CharField('Smart TV', max_length=255, blank=True)
+    sound = models.CharField('Мощность звука', max_length=255, blank=True)
+
+    class Meta:
+        verbose_name = 'Телевизор'
+        verbose_name_plural = 'Телевизоры'
 
     def __str__(self) -> str:
         return f'{self.category.name} {self.title}'

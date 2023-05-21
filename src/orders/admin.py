@@ -9,9 +9,9 @@ class OrderItemInline(admin.TabularInline):
 # Атрибут inlines позволяет вставлять мо-дель в ту же страницу редактирования,
 #                                               что и связанная с ней модель
     model = OrderItem
-    fields = ['phone', 'note', 'price']
+    fields = ['phone', 'note', 'tv', 'price']
     extra = 0
-    raw_id_fields = ['phone', 'note']
+    raw_id_fields = ['phone', 'note', 'tv',]
  
     verbose_name_plural = "Товары"
 

@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from shop.models import SmartPhone, Notebook
+from shop.models import SmartPhone, Notebook, Tv
 from .models import  OrderItem
 from .forms import OrderCreateForm
 
@@ -20,6 +20,7 @@ def order_create(request):
     TYPE_MODEL_CLASS = {
         'Смартфоны': SmartPhone,
         'Ноутбуки': Notebook,
+        'Телевизоры': Tv,
     }
 
     if cart:
@@ -79,11 +80,19 @@ def order_create(request):
                                     note=product,
                                     quantity=qty,
                                     price=product.price * qty)
-            else:
+                
+            elif product.category.id == 2:
                 OrderItem.objects.create(order=order,
                                     phone=product,
                                     quantity=qty,
                                     price=product.price * qty)
+                
+            elif product.category.id == 3:
+                OrderItem.objects.create(order=order,
+                                    tv=product,
+                                    quantity=qty,
+                                    price=product.price * qty)
+            
                 
         del request.session['cart']      
         messages.success(request, 'Оплата завершена !')      
