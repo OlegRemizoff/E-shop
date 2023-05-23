@@ -19,7 +19,11 @@ $(function () {
 			type: 'GET',
 			data: { type: type, id: id, slug: slug },
 			success: function (res) {  // сохраняем ответ в переменную res
-				console.log(res)	
+				console.log(res)
+				$this.find('i').removeClass('fa-shopping-cart').addClass("fas fa-luggage-cart");
+				
+
+
 			},
 			error: function () {
 				alert('Error!')
