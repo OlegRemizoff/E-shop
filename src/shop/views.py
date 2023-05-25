@@ -51,7 +51,12 @@ class ProductByCategoryView(View):
     def get(self, request, *args, **kwargs):
         # pk = kwargs.get('id')
         category_model = self.CATEGORY_MODEL_CLASS[kwargs['pk']]
-        category = category_model._base_manager.all()
+
+        if request.GET.get('res'):
+            category = category_model._base_manager.order_by(request.GET.get('res'))
+        else:
+            category = category_model._base_manager.order_by('id')
+
 
         paginator = Paginator(category, 6)
         page_number = request.GET.get('page', 1)

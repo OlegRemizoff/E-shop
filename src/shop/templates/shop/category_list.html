@@ -47,21 +47,29 @@
 			<h3 class="section-title">{{ category.first.category }}</h3>
 
 			<p>Наш интернет-магазин предлагает широкий выбор товаров, удовлетворяющих потребностям различных пользователей. Ниже приведено краткое описание некоторых популярных моделей, доступных у нас:</p>
-
+	 
+			</form>
 			<div class="row">
 				<div class="col-sm-6">
+					<form action="{% url 'shop:product_category'  category.first.category.id %}" method="GET" id="sorted-form">
 					<div class="input-group mb-3">
 						<label class="input-group-text" for="input-sort">Сортировка:</label>
-						<select class="form-select" id="input-sort">
-							<option selected>По умолчанию</option>
-							<option value="1">Название (А - Я)</option>
-							<option value="2">Название (Я - А)</option>
-							<option value="3">Цена (низкая > высокая)</option>
-							<option value="3">Цена (высокая > низкая)</option>
-						</select>
+						<select name="res" class="form-select" id="input-sort" onchange="displaySelectedValue()">
+							<option value="id">По умолчанию</option>
+							<option value="title">Название (А - Я)</option>
+							<option value="-title">Название (Я - А)</option>
+							<option value="price">Цена по возрастанию &#8593;</option>
+							<option value="-price">Цена по убыванию  &#8595;</option>
+						<input type="submit" value="Отправить" hidden>
 					</div>
+					</form>
+					<!-- Выбираем select без кнопки -->
+					<script>
+						document.getElementById('input-sort').addEventListener('change', function() {
+						  document.getElementById('sorted-form').submit();
+						});
+					  </script>
 				</div>
-
 				<div class="col-sm-6">
 					<div class="input-group mb-3">
 						<label class="input-group-text" for="input-sort">Показать:</label>
