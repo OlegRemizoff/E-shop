@@ -52,13 +52,18 @@ class ProductByCategoryView(View):
         # pk = kwargs.get('id')
         category_model = self.CATEGORY_MODEL_CLASS[kwargs['pk']]
 
+        ### Order ###
         if request.GET.get('res'):
             category = category_model._base_manager.order_by(request.GET.get('res'))
         else:
             category = category_model._base_manager.order_by('id')
 
+        ### Show ###
+        if request.GET.get('show'):
+            paginator = Paginator(category, request.GET.get('show'))
+        else:
+            paginator = Paginator(category, 6)
 
-        paginator = Paginator(category, 6)
         page_number = request.GET.get('page', 1)
         page_obj = paginator.get_page(page_number)
         return render(request, 'shop/category_list.html', {'page_obj': page_obj, 'category': category})
@@ -79,22 +84,4 @@ class Search(TemplateView):
 
         context['products'] = self.products
         return context
-
-
-
-
-
-
-
-
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     context['phone'] = SmartPhone.objects.filter(title__icontains=self.request.GET.get('s'))
-    #     context['note'] = Notebook.objects.filter(title__icontains=self.request.GET.get('s'))
-    #     # context['s'] = f"s={self.request.GET.get('s')}&" # для пагинации
-    #     return context
-
-
-
-
 
