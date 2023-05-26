@@ -11,6 +11,9 @@ def cart(request):
     items = []
     total_price = 0
 
+    order = request.GET.get('res') # product_sum or -product_sum
+
+
     TYPE_MODEL_CLASS = {
         'Смартфоны': SmartPhone,
         'Ноутбуки': Notebook,
@@ -47,9 +50,19 @@ def cart(request):
             items.append(add_data) 
         # [{'id': 1, 'title': 'HUAWEI P60 Pro', 'qty': '2', 'product_sum': 220000.0 и тд}, ...]
         for i in items:
-            total_price += float(i['product_sum'])       
+            total_price += float(i['product_sum'])
 
-    return render(request, 'cart/cart_detail.html', {'items': items, 'total_price': total_price})
+        # для сортировки
+        if order and order == 'product_sum':
+            items = sorted(items, key=lambda x: x[order])
+        elif order == '-product_sum':
+            items = sorted(items, key=lambda x: x['product_sum'], reverse=True)
+        else:
+            items
+
+    return render(request, 'cart/cart_detail.html', {'items': items,
+                                                    'total_price': total_price,
+                                                    'order': order})
 
 
 def add_to_cart(request, type, id, slug, qty=1, product_sum=0):

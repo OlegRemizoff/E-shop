@@ -28,22 +28,19 @@
           <div class="d-flex justify-content-between align-items-center mb-4">
             <h3 class="fw-normal mb-0 text-black">Ваша корзина:  {% if not product_count %} пуста {% endif %}</h3>
             <div>
-              <form action="" method="GET" id="sorted-form">
+              <form action="" method="GET" id="sorted-cart">
                 <div class="input-group mb-3">
-
-                  <select name="res" class="form-select" id="input-sort" onchange="displaySelectedValue()">
+                  <select name="res" class="form-select" id="input-sort">
                     <option value="id">По умолчанию</option>
-                    <option value="title">Название (А - Я)</option>
-                    <option value="-title">Название (Я - А)</option>
-                    <option value="price">Цена по возрастанию &#8593;</option>
-                    <option value="-price">Цена по убыванию  &#8595;</option>
+                    <option value="product_sum">Цена по возрастанию &#8593;</option>
+                    <option value="-product_sum">Цена по убыванию  &#8595;</option>
                   <input type="submit" value="Отправить" hidden>
                 </div>
                 </form>
                 <!-- Выбираем select без кнопки -->
                 <script>
                   document.getElementById('input-sort').addEventListener('change', function() {
-                    document.getElementById('sorted-form').submit();
+                    document.getElementById('sorted-cart').submit();
                   });
                   </script>
             </div>
