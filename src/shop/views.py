@@ -8,6 +8,14 @@ from .models import LatestProducts, Notebook, SmartPhone, Tv
 
 # Create your views here.
 
+CATEGORY_MODEL_CLASS = {
+    
+    1: Notebook,
+    2: SmartPhone,
+    3: Tv,
+    
+}
+
 
 class HomeView(View):
 
@@ -41,16 +49,9 @@ class ProductDetailView(DetailView):
 
 class ProductByCategoryView(View):
 
-    CATEGORY_MODEL_CLASS = {
-        1: Notebook,
-        2: SmartPhone,
-        3: Tv,
-
-    }
-
     def get(self, request, *args, **kwargs):
         # pk = kwargs.get('id')
-        category_model = self.CATEGORY_MODEL_CLASS[kwargs['pk']]
+        category_model = CATEGORY_MODEL_CLASS[kwargs['pk']]
 
         ### Order ###
         if request.GET.get('res'):
@@ -85,3 +86,23 @@ class Search(TemplateView):
         context['products'] = self.products
         return context
 
+
+class CategoryFilterView(View):
+
+    def get(self, request, *args, **kwargs):
+        
+        category_model = CATEGORY_MODEL_CLASS[kwargs['pk']]
+        category = category_model._base_manager.all()
+        items = []
+        
+        if request.method == 'GET':
+            selected_values = request.GET.getlist('brand')
+            for i in selected_values:
+                items.extend(category_model._base_manager.filter(title__icontains=i))
+
+            paginator = Paginator(items, 6)
+            page_number = request.GET.get('page', 1)
+            page_obj = paginator.get_page(page_number)
+
+        
+        return render(request, 'shop/filter.html', {'page_obj': page_obj, "category": category})

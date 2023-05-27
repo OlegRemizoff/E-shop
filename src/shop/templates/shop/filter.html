@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block title %}
+{{ block.super }}|{{ category.first.category }}
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+	<nav aria-label="breadcrumb">
+		<ol class="breadcrumb bg-light p-2">
+			<li class="breadcrumb-item"><a href="{% url 'shop:home' %}"><i class="fas fa-home"></i></a></li>
+			<li class="breadcrumb-item"><a href="#">{{ category.first.category}}</a></li>
+			<li class="breadcrumb-item active" aria-current="page"></li>
+		</ol>
+	</nav>
+</div>
+
+
+<div class="container py-3">
+	<div class="row">
+
+		<div class="col-lg-3 sidebar">
+
+			<div class="mb-2 sidebar-toggler">
+				<button class="btn btn-light" type="button">Категории <i
+						class="fas fa-chevron-circle-down"></i></button>
+			</div>
+			<!-- aside Widget -->
+			{% include 'inc/_sidebar.html' %}
+			<!-- /aside Widget -->
+		</div>
+
+
+		<div class="col-lg-9 category-content">
+			<h3 class="section-title">{{ category.first.category }}</h3>
+
+
+
+
+			<div class="row">
+				{% for item in page_obj %}
+				<div class="col-lg-4 col-sm-6 mb-3">
+					<div class="product-card">
+						<div class="product-tumb">
+							<a href="{{ note.get_absolute_url }}"><img src="{{ item.image.url }}" alt=""></a>
+						</div>
+						<div class="product-details">
+							<h4><a href="{{ item.get_absolute_url }}">{{ item.title }}</a></h4>
+							<p>{{ item.description }}</p>
+							<div class="product-bottom-details d-flex justify-content-between">
+								<div class="product-price">{{ item.price|floatformat:0|intcomma }} &#8381;</div>
+								<div class="product-links">
+								{% if item.slug in url_array %}
+									{% include 'inc/_icon_in.html' %}
+								{% else %}
+									{% include 'inc/_icon.html' %}
+								{% endif %}
+							<a href="#"><i class="far fa-heart"></i></a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+                {% empty %}
+                <!-- <h3>Похоже ничего нет</h3> -->
+                    {% include 'inc/_404.html' %}
+				{% endfor %}
+			</div>
+
+			<div class="row">
+				<div class="col-md-12">
+					<nav aria-label="Page navigation example">
+						<ul class="pagination">
+							{% if page_obj.has_previous %}
+							<li class="page-item"><a class="page-link" href="?page=1">First</a></li>
+							{% endif %}
+
+							{% for p in page_obj.paginator.page_range %}
+
+                                {% if page_obj.number == p  and not page_obj.has_next %}
+
+                                {% elif page_obj.number == p %}
+                                <li class="page-item active">
+                                    <a class="page-link" href="?page={{ p }}">{{ p }}</a>
+                                </li> 
+
+								{% elif p > page_obj.number|add:-3 and p < page_obj.number|add:3 %}
+								<li class="page-item">
+									<a class="page-link" href="?page={{ p }}">{{ p }}</a>
+								</li>
+								{% endif %}
+
+							{% endfor %}
+							
+							{% if page_obj.has_next %}
+							<li class="page-item">
+								<a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+							</li>
+							{% endif %}
+						</ul>
+					</nav>
+				</div>
+
+			</div>
+
+		</div>
+
+	</div>
+</div>
+
+{% endblock %}
