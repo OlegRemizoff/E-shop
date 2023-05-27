@@ -11,7 +11,7 @@
                 <label for="brand-1">
                     <span></span>
                     Apple
-                    <small>(578)</small>
+                    <small>({{ brand_count.apple }})</small>
                 </label>
             </div>
             <div class="input-checkbox">
@@ -19,7 +19,7 @@
                 <label for="brand-2">
                     <span></span>
                     Samsung
-                    <small>(125)</small>
+                    <small>({{ brand_count.samsung }})</small>
                 </label>
             </div>
             <div class="input-checkbox">
@@ -27,7 +27,23 @@
                 <label for="brand-3">
                     <span></span>
                     Sony
-                    <small>(755)</small>
+                    <small>({{ brand_count.sony }})</small>
+                </label>
+            </div>
+            <div class="input-checkbox">
+                <input type="checkbox" name="brand" value="huawei"  id="brand-4">
+                <label for="brand-4">
+                    <span></span>
+                    Huawei
+                    <small>({{ brand_count.huawei }})</small>
+                </label>
+            </div>
+            <div class="input-checkbox">
+                <input type="checkbox" name="brand" value="xiaomi"  id="brand-5">
+                <label for="brand-5">
+                    <span></span>
+                    Xiaomi
+                    <small>({{ brand_count.xiaomi }})</small>
                 </label>
             </div>
         </div>

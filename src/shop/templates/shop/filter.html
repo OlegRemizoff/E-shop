@@ -8,6 +8,7 @@
 
 {% block content %}
 
+
 <div class="container">
 	<nav aria-label="breadcrumb">
 		<ol class="breadcrumb bg-light p-2">
@@ -38,7 +39,7 @@
 			<h3 class="section-title">{{ category.first.category }}</h3>
 
 
-
+			
 
 			<div class="row">
 				{% for item in page_obj %}
@@ -110,5 +111,7 @@
 
 	</div>
 </div>
+
+
 
 {% endblock %}

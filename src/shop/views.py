@@ -4,6 +4,7 @@ from django.core.paginator import Paginator
 import random
 
 from .models import LatestProducts, Notebook, SmartPhone, Tv
+from .utils import CategoryBrandCount
 
 
 # Create your views here.
@@ -47,11 +48,14 @@ class ProductDetailView(DetailView):
     slug_url_kwarg = 'slug'
 
 
-class ProductByCategoryView(View):
+class ProductByCategoryView(CategoryBrandCount, View):
 
     def get(self, request, *args, **kwargs):
         # pk = kwargs.get('id')
         category_model = CATEGORY_MODEL_CLASS[kwargs['pk']]
+
+        # Кол-во товаров определенного бренда для сайдбара 
+        brand_count = CategoryBrandCount.get_brand_count(self, category_model)
 
         ### Order ###
         if request.GET.get('res'):
@@ -67,7 +71,9 @@ class ProductByCategoryView(View):
 
         page_number = request.GET.get('page', 1)
         page_obj = paginator.get_page(page_number)
-        return render(request, 'shop/category_list.html', {'page_obj': page_obj, 'category': category})
+        return render(request, 'shop/category_list.html', {'page_obj': page_obj, 
+                                                           'category': category,
+                                                           'brand_count': brand_count})
 
 
 class Search(TemplateView):
@@ -94,15 +100,21 @@ class CategoryFilterView(View):
         category_model = CATEGORY_MODEL_CLASS[kwargs['pk']]
         category = category_model._base_manager.all()
         items = []
-        
+
+        # Кол-во товаров определенного бренда для сайдбара
+        brand_count = CategoryBrandCount.get_brand_count(self, category_model)
+
         if request.method == 'GET':
             selected_values = request.GET.getlist('brand')
             for i in selected_values:
-                items.extend(category_model._base_manager.filter(title__icontains=i))
+                items.extend(category_model._base_manager.filter(brand__icontains=i))
+
 
             paginator = Paginator(items, 6)
             page_number = request.GET.get('page', 1)
             page_obj = paginator.get_page(page_number)
 
         
-        return render(request, 'shop/filter.html', {'page_obj': page_obj, "category": category})
+        return render(request, 'shop/filter.html', {'page_obj': page_obj,
+                                                    "category": category,
+                                                    'brand_count': brand_count})
