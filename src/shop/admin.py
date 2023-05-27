@@ -11,8 +11,8 @@ class CategoryAdmin(admin.ModelAdmin):
 
 
 class SmartPhoneAdmin(admin.ModelAdmin):
-    list_display = ('title', 'category', 'price',
-                    'show_image', 'available',)
+    list_display = ('brand', 'title', 'category', 'price',
+                'show_image', 'available', )
     list_editable = ('available', )
     list_filter = ('available', 'price', )
     prepopulated_fields = {"slug": ("title",)}
@@ -33,8 +33,8 @@ class SmartPhoneAdmin(admin.ModelAdmin):
 
 
 class NotebookAdmin(admin.ModelAdmin):
-    list_display = ('title', 'category', 'price',
-                    'show_image', 'available', )
+    list_display = ('brand', 'title', 'category', 'price',
+                'show_image', 'available', )
     list_editable = ('available', )
     list_filter = ('available', 'price', )
     prepopulated_fields = {"slug": ("title",)}
@@ -54,8 +54,8 @@ class NotebookAdmin(admin.ModelAdmin):
 
 
 class TvAdmin(admin.ModelAdmin):
-    list_display = ('title', 'category', 'price',
-                    'show_image', 'available', )
+    list_display = ('brand', 'title', 'category', 'price',
+                'show_image', 'available', )
     list_editable = ('available', )
     list_filter = ('available', 'price', )
     prepopulated_fields = {"slug": ("title",)}
