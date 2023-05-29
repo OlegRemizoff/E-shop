@@ -37,20 +37,15 @@
 				{% include 'inc/_notebook_specification.html' %}
                 {% endif %}
 
-
+				{% if product.available %}
 				<ul class="list-unstyled">
 					<li><i class="fas fa-check text-success"></i> В наличии</li>
-					<li><i class="fas fa-shipping-fast text-muted"></i> Ожидается</li>
                     <i class="fas fa-hand-holding-usd"></i> <span class="product-price">
                         {{ product.price|floatformat:0|intcomma  }} &#8381;
                     </li>
 				</ul>
 
 				<div id="product">
-					<!-- <div class="input-group mb-3">
-						<input id="input-quantity" type="text" class="form-control" name="quantity" value="1">
-						<button class="btn btn-danger" type="button" id="button-addon2">Купить</button>
-					</div> -->
 				</div>
 				<div class="product-links">
 					<!-- <a href="#"><i class="fas fa-shopping-cart"></i></a> -->
@@ -68,7 +63,14 @@
 					</form>
 
 				</div>
-				
+				{% else %}
+				<ul class="list-unstyled">
+					<li><i class="fas fa-shipping-fast text-muted"></i> Ожидается</li>
+                    <i class="fas fa-hand-holding-usd"></i> <span class="product-price">
+                        {{ product.price|floatformat:0|intcomma  }} &#8381;
+                    </li>
+				</ul>
+				{% endif %}
 
 			</div>
 
