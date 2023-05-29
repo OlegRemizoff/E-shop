@@ -125,7 +125,7 @@
 	
 								{% elif p > page_obj.number|add:-3 and p < page_obj.number|add:3 %}
 								<li class="page-item">
-									<a class="page-link" href="?page={{ p }}">{{ p }}</a>
+									<a class="page-link" href="?{{ res_sort }}page={{ p }}">{{ p }}</a>
 								</li>
 								{% endif %}
 

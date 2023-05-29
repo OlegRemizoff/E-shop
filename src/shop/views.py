@@ -71,9 +71,13 @@ class ProductByCategoryView(CategoryBrandCount, View):
 
         page_number = request.GET.get('page', 1)
         page_obj = paginator.get_page(page_number)
+
+        res_sort = f"res={request.GET.get('res')}&" # для пагинации 
+
         return render(request, 'shop/category_list.html', {'page_obj': page_obj, 
                                                            'category': category,
-                                                           'brand_count': brand_count})
+                                                           'brand_count': brand_count,
+                                                           'res_sort': res_sort,})
 
 
 class Search(TemplateView):
