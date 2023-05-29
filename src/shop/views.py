@@ -84,10 +84,12 @@ class Search(TemplateView):
         context = super().get_context_data(**kwargs)
         phone = SmartPhone.objects.filter(title__icontains=self.request.GET.get('s'))
         note = Notebook.objects.filter(title__icontains=self.request.GET.get('s'))
+        tv = Tv.objects.filter(title__icontains=self.request.GET.get('s'))
 
         self.products.clear()
         self.products.extend(note) 
         self.products.extend(phone) 
+        self.products.extend(tv)
 
         context['products'] = self.products
         return context
