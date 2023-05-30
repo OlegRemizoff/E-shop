@@ -57,7 +57,7 @@
 				<div class="col-lg-4 col-sm-6 mb-3">
 					<div class="product-card">
 						<div class="product-tumb">
-							<a href="{{ item.get_absolute_url }}"><img src="{{ item.image.url }}" alt=""></a>
+							<a href="{{ item.get_absolute_url }}"><img {% if item.image %} src="{{ item.image.url }}" {% else %} alt="" {% endif %}></a>
 						</div>
 						
 						<div class="product-details">

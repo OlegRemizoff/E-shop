@@ -10,11 +10,11 @@ from .utils import CategoryBrandCount
 # Create your views here.
 
 CATEGORY_MODEL_CLASS = {
-    
+
     1: Notebook,
     2: SmartPhone,
     3: Tv,
-    
+
 }
 
 
@@ -54,12 +54,13 @@ class ProductByCategoryView(CategoryBrandCount, View):
         # pk = kwargs.get('id')
         category_model = CATEGORY_MODEL_CLASS[kwargs['pk']]
 
-        # Кол-во товаров определенного бренда для сайдбара 
+        # Кол-во товаров определенного бренда для сайдбара
         brand_count = CategoryBrandCount.get_brand_count(self, category_model)
 
         ### Order ###
         if request.GET.get('res'):
-            category = category_model._base_manager.order_by(request.GET.get('res'))
+            category = category_model._base_manager.order_by(
+                request.GET.get('res'))
         else:
             category = category_model._base_manager.order_by('id')
 
@@ -72,12 +73,12 @@ class ProductByCategoryView(CategoryBrandCount, View):
         page_number = request.GET.get('page', 1)
         page_obj = paginator.get_page(page_number)
 
-        res_sort = f"res={request.GET.get('res')}&" # для пагинации 
+        res_sort = f"res={request.GET.get('res', '')}&"  # для пагинации
 
-        return render(request, 'shop/category_list.html', {'page_obj': page_obj, 
+        return render(request, 'shop/category_list.html', {'page_obj': page_obj,
                                                            'category': category,
                                                            'brand_count': brand_count,
-                                                           'res_sort': res_sort,})
+                                                           'res_sort': res_sort, })
 
 
 class Search(TemplateView):
@@ -86,13 +87,15 @@ class Search(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        phone = SmartPhone.objects.filter(title__icontains=self.request.GET.get('s'))
-        note = Notebook.objects.filter(title__icontains=self.request.GET.get('s'))
+        phone = SmartPhone.objects.filter(
+            title__icontains=self.request.GET.get('s'))
+        note = Notebook.objects.filter(
+            title__icontains=self.request.GET.get('s'))
         tv = Tv.objects.filter(title__icontains=self.request.GET.get('s'))
 
         self.products.clear()
-        self.products.extend(note) 
-        self.products.extend(phone) 
+        self.products.extend(note)
+        self.products.extend(phone)
         self.products.extend(tv)
 
         context['products'] = self.products
@@ -102,25 +105,33 @@ class Search(TemplateView):
 class CategoryFilterView(View):
 
     def get(self, request, *args, **kwargs):
-        
+
         category_model = CATEGORY_MODEL_CLASS[kwargs['pk']]
         category = category_model._base_manager.all()
-        items = []
 
         # Кол-во товаров определенного бренда для сайдбара
         brand_count = CategoryBrandCount.get_brand_count(self, category_model)
 
-        if request.method == 'GET':
-            selected_values = request.GET.getlist('brand')
-            for i in selected_values:
-                items.extend(category_model._base_manager.filter(brand__icontains=i))
+        # Получение и возвращение результата фильтрации
+        def get_queryset():
+            kwargs = {}
+            if request.GET.getlist('brand'):
+                kwargs['brand__in'] = request.GET.getlist('brand')
+            if request.GET.getlist('year'):
+                kwargs['year__in'] = request.GET.getlist('year')
 
+            # queryset = category_model._base_manager.filter(
+            #     Q(year__in=selected_years) &
 
-            paginator = Paginator(items, 6)
-            page_number = request.GET.get('page', 1)
-            page_obj = paginator.get_page(page_number)
+            #     Q(brand__in=selected_values)
 
-        
+            #     )
+            return category_model._base_manager.filter(**kwargs)
+
+        paginator = Paginator(get_queryset(), 6)
+        page_number = request.GET.get('page', 1)
+        page_obj = paginator.get_page(page_number)
+
         return render(request, 'shop/filter.html', {'page_obj': page_obj,
                                                     "category": category,
                                                     'brand_count': brand_count})
