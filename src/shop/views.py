@@ -111,8 +111,11 @@ class CategoryFilterView(View):
 
         # Кол-во товаров определенного бренда для сайдбара
         brand_count = CategoryBrandCount.get_brand_count(self, category_model)
+        other = CategoryBrandCount.get_other_brand(self, category_model)
+        print(other)
 
         # Получение и возвращение результата фильтрации
+
         def get_queryset():
             kwargs = {}
             if request.GET.getlist('brand'):
@@ -126,9 +129,18 @@ class CategoryFilterView(View):
             #     Q(brand__in=selected_values)
 
             #     )
-            return category_model._base_manager.filter(**kwargs)
 
-        paginator = Paginator(get_queryset(), 6)
+            return category_model._base_manager.filter(**kwargs)
+        
+        queryset = None
+        if request.GET.get('other'):
+            queryset = other
+        else:
+            queryset = get_queryset()
+
+
+
+        paginator = Paginator(queryset, 6)
         page_number = request.GET.get('page', 1)
         page_obj = paginator.get_page(page_number)
 
