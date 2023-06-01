@@ -51,6 +51,7 @@
 				<div class="product-links">
 					<!-- <a href="#"><i class="fas fa-shopping-cart"></i></a> -->
 					<!-- <a href="#"><i class="far fa-heart"></i></a> -->
+					{% if product.slug not in url_array %}
 					<form action="{% url 'cart:add' product.category.name  product.id product.slug %}" method="post">
 						{% csrf_token %}
 						<input type="hidden" name="url_from" value="{{ request.path }}">
@@ -60,8 +61,11 @@
 						<button class="btn btn-danger" type="submit" id="button-addon2">
 							В корзину
 						</button>
-						
 					</form>
+					{% else %}
+					{% include 'inc/_icon_in.html' %}
+					<span class="product-price">Товар в корзине</span>
+					{% endif %}
 
 				</div>
 				{% else %}

@@ -30,10 +30,12 @@ def cart(request):
             if product_sum == 0:
                 product_sum = product.price
 
+
             qty = i['qty']
             if request.POST.get('quantity'):
                 qty = request.POST.get('quantity')
 
+            
             # формируем словарь с нужными данными и добавляем его в список
             add_data = { 
                 'id': product.id,
@@ -43,7 +45,7 @@ def cart(request):
                 'color': product.color,
                 'price': product.price,
                 'qty': qty,
-                'product_sum': float(product_sum) * float(qty)
+                'product_sum': float(product_sum) 
 
             }
 
