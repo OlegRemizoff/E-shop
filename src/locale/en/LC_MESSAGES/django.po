@@ -1,0 +1,172 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-06-04 09:58+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: shop/templates/inc/_sidebar.html:7
+msgid "Производитель"
+msgstr "Brand"
+
+#: shop/templates/inc/_sidebar.html:53
+msgid "Другой"
+msgstr "Other"
+
+#: shop/templates/inc/_sidebar.html:63
+msgid "Год"
+msgstr "Year"
+
+#: shop/templates/inc/_sidebar.html:109
+msgid "Найти"
+msgstr "Find"
+
+#: shop/templates/shop/category_list.html:40
+msgid ""
+"Наш интернет-магазин предлагает широкий выбор товаров, удовлетворяющих "
+"потребностям различных пользователей. Ниже приведено краткое описание "
+"некоторых популярных моделей, доступных у нас:"
+msgstr ""
+"Our online store offers a wide range of products to meet the needs of "
+"different users. Below is a brief description of some of the popular models "
+"available with us:"
+
+#: shop/templates/shop/category_list.html:47
+msgid "Сортировка:"
+msgstr "Sorting:"
+
+#: shop/templates/shop/category_list.html:49
+#: shop/templates/shop/category_list.html:69
+msgid "По умолчанию"
+msgstr "Default"
+
+#: shop/templates/shop/category_list.html:50
+msgid "Название (А - Я)"
+msgstr "Name (A - Z)"
+
+#: shop/templates/shop/category_list.html:51
+msgid "Название (Я - А)"
+msgstr "Name (Z - A)"
+
+#: shop/templates/shop/category_list.html:52
+msgid "Цена по возрастанию"
+msgstr "Price ascending"
+
+#: shop/templates/shop/category_list.html:53
+msgid "Цена по убыванию"
+msgstr "Price descending"
+
+#: shop/templates/shop/category_list.html:67
+msgid "Показать:"
+msgstr "Show:"
+
+#: shop/templates/shop/detail.html:33
+msgid "Коротко о товаре:"
+msgstr "Briefly about the product:"
+
+#: shop/templates/shop/detail.html:70
+msgid "В наличии"
+msgstr "Available"
+
+#: shop/templates/shop/detail.html:86
+msgid "Кол-во:"
+msgstr "QTY:"
+
+#: shop/templates/shop/detail.html:89
+msgid "В корзину"
+msgstr "Add in cart"
+
+#: shop/templates/shop/detail.html:94
+msgid "Товар в корзине"
+msgstr "Item in cart"
+
+#: shop/templates/shop/detail.html:100
+msgid "Ожидается"
+msgstr "Expected"
+
+#: shop/templates/shop/index.html:55
+msgid "Рекомендуемые товары"
+msgstr "Recommended products"
+
+#: shop/templates/shop/index.html:92
+msgid "Наши преимущества"
+msgstr "Our advantages"
+
+#: shop/templates/shop/index.html:98
+msgid "Прямые поставки от производителей"
+msgstr "Direct deliveries from manufacturers"
+
+#: shop/templates/shop/index.html:105
+msgid "Широкий ассортимент товара"
+msgstr "Wide range of goods"
+
+#: shop/templates/shop/index.html:112
+msgid "Приятные и конкурентные цены"
+msgstr "Pleasant and competitive prices"
+
+#: shop/templates/shop/index.html:119
+msgid "Профессиональная консультация и сервис"
+msgstr "Professional advice and service"
+
+#: templates/inc/_footer.html:6
+#, fuzzy
+#| msgid "Авторизация"
+msgid "Информация"
+msgstr "Log in"
+
+#: templates/inc/_footer.html:8
+msgid "Главная"
+msgstr "Home"
+
+#: templates/inc/_footer.html:9
+msgid "О магазине"
+msgstr "About shop"
+
+#: templates/inc/_footer.html:10
+msgid "Оплата и доставка"
+msgstr "Payment and delivery"
+
+#: templates/inc/_footer.html:11 templates/inc/_footer.html:25
+msgid "Контакты"
+msgstr "Contacts"
+
+#: templates/inc/_footer.html:16
+msgid "Время работы"
+msgstr "opening hours"
+
+#: templates/inc/_footer.html:18
+msgid "г. Орёл, ул. Пушкина, 10"
+msgstr "Orel, st. Pushkin, 10"
+
+#: templates/inc/_footer.html:19
+msgid "пн-вс: 9:00 - 18:00"
+msgstr "mon-sun: from 9am till 6 o'clock pm"
+
+#: templates/inc/_footer.html:20
+msgid "без перерыва"
+msgstr "nonstop"
+
+#: templates/inc/_footer.html:34
+msgid "Мы в сети"
+msgstr "We are online"
+
+#: templates/inc/_header.html:99
+msgid "Авторизация"
+msgstr "Log in"
+
+#: templates/inc/_header.html:100
+msgid "Регистрация"
+msgstr "Register"

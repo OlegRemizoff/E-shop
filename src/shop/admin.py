@@ -1,16 +1,17 @@
 from django.contrib import admin
 from django.utils.safestring import mark_safe
 from django.forms import ModelChoiceField
+from modeltranslation.admin import TranslationAdmin
 
 from .models import Category, SmartPhone, Notebook, Tv
 
 
-class CategoryAdmin(admin.ModelAdmin):
+class CategoryAdmin(TranslationAdmin):
     list_display = ('id', 'name', 'slug',)
     prepopulated_fields = {"slug": ("name",)}
 
 
-class SmartPhoneAdmin(admin.ModelAdmin):
+class SmartPhoneAdmin(TranslationAdmin):
     list_display = ('brand', 'title', 'category', 'price',
                 'show_image', 'available', )
     list_editable = ('available', )
@@ -32,7 +33,7 @@ class SmartPhoneAdmin(admin.ModelAdmin):
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
 
-class NotebookAdmin(admin.ModelAdmin):
+class NotebookAdmin(TranslationAdmin):
     list_display = ('brand', 'title', 'category', 'price',
                 'show_image', 'available', )
     list_editable = ('available', )
@@ -53,7 +54,7 @@ class NotebookAdmin(admin.ModelAdmin):
     show_image.__name__ = 'Миниатюра'
 
 
-class TvAdmin(admin.ModelAdmin):
+class TvAdmin(TranslationAdmin):
     list_display = ('brand', 'title', 'category', 'price',
                 'show_image', 'available', )
     list_editable = ('available', )

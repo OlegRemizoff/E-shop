@@ -1,10 +1,10 @@
-
+{% load i18n %}
 
 
 <form action="{% url 'shop:filter' category.first.category.id %}" method="get">
 <div class="container">
     <div class="aside">
-        <h3 class="aside-title">Производитель</h3>
+        <h3 class="aside-title">{% translate 'Производитель' %}</h3>
         <div class="checkbox-filter">
             <div class="input-checkbox">
                 <input type="checkbox" name="brand" value="apple" id="brand-1">
@@ -50,7 +50,7 @@
                 <input type="checkbox" name="other" value="other"  id="brand-0">
                 <label for="brand-0">
                     <span></span>
-                    Другой
+                    {% translate 'Другой' %}
                     <small>({{ brand_count.other}})</small>
                 </label>
             </div>
@@ -60,7 +60,7 @@
      <!-- Year ============================================================== 
     =====================================================================-->
     <div class="aside">
-        <h3 class="aside-title">Год</h3>
+        <h3 class="aside-title">{% translate 'Год' %}</h3>
         <div class="checkbox-filter">
             <div class="input-checkbox">
                 <input type="checkbox" name="year" value="2019" id="year-1">
@@ -106,7 +106,7 @@
     </div>
 
     <button class="btn btn-danger" type="submit" id="button-addon2" style="margin-top: 10px;">
-        Найти
+        {% translate 'Найти' %}
     </button>
 </div>
 </form>

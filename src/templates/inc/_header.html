@@ -1,5 +1,6 @@
 {% load static %}
 {% load mytags %}
+{% load i18n %}
 
 <header>
     <div class="header-top py-3">
@@ -25,6 +26,7 @@
                         <span class="badge bg-danger rounded-pill count-items">{{ product_count }}</span>
                         
                     </a>
+                    <!-- Modal cart -->
                     <div class="modal fade" id="cart-modal" tabindex="-1" aria-labelledby="exampleModalLabel"
                         aria-hidden="true">
                         <div class="modal-dialog modal-xl">
@@ -85,6 +87,7 @@
                             </div>
                         </div>
                     </div>
+                    <!-- end modal cart -->
 
                     <a href="#"><i class="far fa-heart"></i></a>
 
@@ -93,12 +96,39 @@
                             <i class="far fa-user"></i>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Авторизация</a></li>
-                            <li><a class="dropdown-item" href="#">Регистрация</a></li>
+                            <li><a class="dropdown-item" href="#">{% translate 'Авторизация' %}</a></li>
+                            <li><a class="dropdown-item" href="#">{% translate 'Регистрация' %}</a></li>
                         </ul>
                     </div>
-
+                    <!-- temp language -->
                     <div class="dropdown d-inline-block">
+                    <form action="{% url 'set_language' %}" id="language-form" method="post">
+                        {% csrf_token %}
+                        <input name="next" type="hidden" value="{{ redirect_to }}">
+                        <select name="language" id="language">
+                            {% get_current_language as LANGUAGE_CODE %}
+                            {% get_available_languages as LANGUAGES %}
+                            {% get_language_info_list for LANGUAGES as languages %}
+                            {% for language in languages %}
+                            <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %}selected {% endif %}>
+                                {{ language.name_local }} ({{ language.code }})
+                            </option>
+                            {% endfor %}
+                            <input type="submit" value="Отправить" hidden>
+                        </select>            
+                    </form>
+                    <script>
+						document.getElementById('language').addEventListener('change', function() {
+						  document.getElementById('language-form').submit();
+						});
+					  </script>
+                    </div>
+                    <!-- end temp language -->
+
+
+
+
+                    <!-- <div class="dropdown d-inline-block">
                         <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown">
                             <img src="{% static 'img/ru.png' %}" alt="">
                         </a>
@@ -109,10 +139,11 @@
                                     English</button>
                             </li>
                         </ul>
-                    </div>
+                    </div> -->
 
                 </div>
             </div>
+
         </div>
     </div><!-- header-top -->
     <div class="header-bottom py-2">
@@ -131,7 +162,7 @@
                         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                             {% get_categories as categories %} <!-- псевдоним -->
                             {% for item in categories %}
-
+                            
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ item.get_absolute_url }}">{{ item.name }}</a>
                             </li>

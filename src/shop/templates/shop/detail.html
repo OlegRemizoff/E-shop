@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load humanize %}
+{% load i18n %}
 
 {% block title %}
 {{ block.super }}| {{ product.category }}|{{ product.title }}
@@ -25,22 +26,47 @@
 		<div class="row">
 
 			<div class="col-md-4 order-md-2">
-				
+				{% get_current_language as LANGUAGE_CODE %}
 				<h1>{{ product.title }}</h1>
-				{{ product.brand }}
 
-                <h6>Коротко о товаре: </h6>
-                {% if product.category.slug == 'smartphones' %}
-                    {% include 'inc/_smartphone_specification.html' %}
-				{% elif product.category.slug == 'televizory' %}
-					{% include 'inc/_tv_specification.html' %}
+
+                <h6>{% translate 'Коротко о товаре:' %}</h6>
+                {% if product.category.slug == 'smartphones' and LANGUAGE_CODE == 'ru' %}
+                    {% include 'inc/_phone_rus.html' %}
+				{% elif product.category.slug == 'smartphones' and LANGUAGE_CODE == 'en' %}
+					{% include 'inc/_phone_eng.html' %}
+				{% elif product.category.slug == 'notebooks' and LANGUAGE_CODE == 'ru' %}
+					{% include 'inc/_note_rus.html' %}
+				{% elif product.category.slug == 'notebooks' and LANGUAGE_CODE == 'en' %}
+					{% include 'inc/_note_eng.html' %}
+				{% elif product.category.slug == 'televizory' and LANGUAGE_CODE == 'ru' %}
+					{% include 'inc/_tv_rus.html' %}
+				{% elif product.category.slug == 'televizory' and LANGUAGE_CODE == 'en' %}
+					{% include 'inc/_tv_eng.html' %}
+				{% endif %}
+
+
+
+
+				{% comment %}
+				{% if product.category.slug == 'notebooks' and LANGUAGE_CODE == 'ru' %}
+				{% include 'inc/_note_rus.html' %}
 				{% else %}
-				{% include 'inc/_notebook_specification.html' %}
-                {% endif %}
+					{% include 'inc/_note_eng.html' %}
+				{% endif %}
+
+
+				{% if product.category.slug == 'televizory' and LANGUAGE_CODE == 'ru' %}
+					{% include 'inc/_tv_rus.html' %}
+				{% else %}
+					{% include 'inc/_tv_eng.html' %}
+				{% endif %}
+				{% endcomment %}
+
 
 				{% if product.available %}
 				<ul class="list-unstyled">
-					<li><i class="fas fa-check text-success"></i> В наличии</li>
+					<li><i class="fas fa-check text-success"></i>{% translate 'В наличии' %}</li>
                     <i class="fas fa-hand-holding-usd"></i> <span class="product-price">
                         {{ product.price|floatformat:0|intcomma  }} &#8381;
                     </li>
@@ -56,21 +82,21 @@
 						{% csrf_token %}
 						<input type="hidden" name="url_from" value="{{ request.path }}">
 
-						<label for="quantity">Кол-во: </label>				
+						<label for="quantity">{% translate 'Кол-во:' %}</label>				
 						<input type="number"  id="quantity" name="quantity" min="1" max="10" value="{{ item.qty }}" style="width: 100px;">
 						<button class="btn btn-danger" type="submit" id="button-addon2">
-							В корзину
+							{% translate 'В корзину' %}
 						</button>
 					</form>
 					{% else %}
 					{% include 'inc/_icon_in.html' %}
-					<span class="product-price">Товар в корзине</span>
+					<span class="product-price">{% translate 'Товар в корзине' %}</span>
 					{% endif %}
 
 				</div>
 				{% else %}
 				<ul class="list-unstyled">
-					<li><i class="fas fa-shipping-fast text-muted"></i> Ожидается</li>
+					<li><i class="fas fa-shipping-fast text-muted"></i>{% translate 'Ожидается' %}</li>
                     <i class="fas fa-hand-holding-usd"></i> <span class="product-price">
                         {{ product.price|floatformat:0|intcomma  }} &#8381;
                     </li>

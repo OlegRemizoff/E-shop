@@ -707,3 +707,11 @@ a.thumbnail:hover {
 .input-checkbox input[type="checkbox"]:checked~.caption {
 	max-height: 800px;
 }
+
+/* Product detail specifications */
+
+.dot {
+	color: rgb(187, 187, 187);
+
+
+}
