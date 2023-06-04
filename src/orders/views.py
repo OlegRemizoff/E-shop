@@ -18,6 +18,10 @@ def order_create(request):
     total_price = 0
 
     TYPE_MODEL_CLASS = {
+        'Smartphones': SmartPhone,
+        'Notebooks': Notebook,
+        'Tv': Tv,
+        
         'Смартфоны': SmartPhone,
         'Ноутбуки': Notebook,
         'Телевизоры': Tv,

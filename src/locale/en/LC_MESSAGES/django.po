@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-04 09:58+0300\n"
+"POT-Creation-Date: 2023-06-04 12:11+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +17,84 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: cart/templates/cart/cart_detail.html:7
+#, fuzzy
+#| msgid "В корзину"
+msgid "Корзина"
+msgstr "Add to cart"
+
+#: cart/templates/cart/cart_detail.html:30
+msgid "Ваша корзина:"
+msgstr "Your shopping cart:"
+
+#: cart/templates/cart/cart_detail.html:30
+msgid "пуста"
+msgstr "is empty"
+
+#: cart/templates/cart/cart_detail.html:35
+#: shop/templates/shop/category_list.html:49
+#: shop/templates/shop/category_list.html:69
+msgid "По умолчанию"
+msgstr "Default"
+
+#: cart/templates/cart/cart_detail.html:36
+#: shop/templates/shop/category_list.html:52
+msgid "Цена по возрастанию"
+msgstr "Price ascending"
+
+#: cart/templates/cart/cart_detail.html:37
+#: shop/templates/shop/category_list.html:53
+msgid "Цена по убыванию"
+msgstr "Price descending"
+
+#: cart/templates/cart/cart_detail.html:58
+#: orders/templates/orders/create.html:38
+msgid "Наименование"
+msgstr "Name"
+
+#: cart/templates/cart/cart_detail.html:61
+#: orders/templates/orders/create.html:42
+msgid "Цвет:"
+msgstr "Color"
+
+#: cart/templates/cart/cart_detail.html:71
+#: orders/templates/orders/create.html:51 shop/templates/shop/detail.html:86
+msgid "Кол-во:"
+msgstr "QTY:"
+
+#: cart/templates/cart/cart_detail.html:73
+msgid "Изменить кол-во"
+msgstr "Change qty"
+
+#: cart/templates/cart/cart_detail.html:77
+#: orders/templates/orders/create.html:56
+msgid "Цена"
+msgstr "Price"
+
+#: cart/templates/cart/cart_detail.html:95
+msgid "Итого:"
+msgstr "Total"
+
+#: cart/templates/cart/cart_detail.html:102
+msgid "Продолжить покупки"
+msgstr "Continue shopping"
+
+#: cart/templates/cart/cart_detail.html:108
+msgid "Оформить заказ"
+msgstr "Checkout"
+
+#: orders/templates/orders/create.html:7 orders/templates/orders/create.html:28
+msgid "Оформление заказа"
+msgstr "Checkout"
+
+#: orders/templates/orders/create.html:68
+msgid "К оплате:"
+msgstr "To pay"
+
+#: orders/templates/orders/create.html:78
+msgid "Оплатить"
+msgstr "Pay"
 
 #: shop/templates/inc/_sidebar.html:7
 msgid "Производитель"
@@ -48,11 +126,6 @@ msgstr ""
 msgid "Сортировка:"
 msgstr "Sorting:"
 
-#: shop/templates/shop/category_list.html:49
-#: shop/templates/shop/category_list.html:69
-msgid "По умолчанию"
-msgstr "Default"
-
 #: shop/templates/shop/category_list.html:50
 msgid "Название (А - Я)"
 msgstr "Name (A - Z)"
@@ -60,14 +133,6 @@ msgstr "Name (A - Z)"
 #: shop/templates/shop/category_list.html:51
 msgid "Название (Я - А)"
 msgstr "Name (Z - A)"
-
-#: shop/templates/shop/category_list.html:52
-msgid "Цена по возрастанию"
-msgstr "Price ascending"
-
-#: shop/templates/shop/category_list.html:53
-msgid "Цена по убыванию"
-msgstr "Price descending"
 
 #: shop/templates/shop/category_list.html:67
 msgid "Показать:"
@@ -81,13 +146,9 @@ msgstr "Briefly about the product:"
 msgid "В наличии"
 msgstr "Available"
 
-#: shop/templates/shop/detail.html:86
-msgid "Кол-во:"
-msgstr "QTY:"
-
 #: shop/templates/shop/detail.html:89
 msgid "В корзину"
-msgstr "Add in cart"
+msgstr "Add to cart"
 
 #: shop/templates/shop/detail.html:94
 msgid "Товар в корзине"
@@ -96,6 +157,10 @@ msgstr "Item in cart"
 #: shop/templates/shop/detail.html:100
 msgid "Ожидается"
 msgstr "Expected"
+
+#: shop/templates/shop/index.html:7 templates/inc/_footer.html:10
+msgid "Главная"
+msgstr "Home"
 
 #: shop/templates/shop/index.html:55
 msgid "Рекомендуемые товары"
@@ -121,45 +186,45 @@ msgstr "Pleasant and competitive prices"
 msgid "Профессиональная консультация и сервис"
 msgstr "Professional advice and service"
 
-#: templates/inc/_footer.html:6
+#: shop/templates/shop/search.html:7 shop/templates/shop/search.html:16
+msgid "Результаты поиска"
+msgstr "Searching results"
+
+#: templates/inc/_footer.html:8
 #, fuzzy
 #| msgid "Авторизация"
 msgid "Информация"
 msgstr "Log in"
 
-#: templates/inc/_footer.html:8
-msgid "Главная"
-msgstr "Home"
-
-#: templates/inc/_footer.html:9
+#: templates/inc/_footer.html:11
 msgid "О магазине"
 msgstr "About shop"
 
-#: templates/inc/_footer.html:10
+#: templates/inc/_footer.html:12
 msgid "Оплата и доставка"
 msgstr "Payment and delivery"
 
-#: templates/inc/_footer.html:11 templates/inc/_footer.html:25
+#: templates/inc/_footer.html:13 templates/inc/_footer.html:27
 msgid "Контакты"
 msgstr "Contacts"
 
-#: templates/inc/_footer.html:16
+#: templates/inc/_footer.html:18
 msgid "Время работы"
 msgstr "opening hours"
 
-#: templates/inc/_footer.html:18
+#: templates/inc/_footer.html:20
 msgid "г. Орёл, ул. Пушкина, 10"
 msgstr "Orel, st. Pushkin, 10"
 
-#: templates/inc/_footer.html:19
+#: templates/inc/_footer.html:21
 msgid "пн-вс: 9:00 - 18:00"
 msgstr "mon-sun: from 9am till 6 o'clock pm"
 
-#: templates/inc/_footer.html:20
+#: templates/inc/_footer.html:22
 msgid "без перерыва"
 msgstr "nonstop"
 
-#: templates/inc/_footer.html:34
+#: templates/inc/_footer.html:36
 msgid "Мы в сети"
 msgstr "We are online"
 

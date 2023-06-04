@@ -8,15 +8,19 @@ from .models import Category, SmartPhone, Notebook, Tv
 
 class CategoryAdmin(TranslationAdmin):
     list_display = ('id', 'name', 'slug',)
+    list_display_links = ('id', 'name', )
     prepopulated_fields = {"slug": ("name",)}
 
 
 class SmartPhoneAdmin(TranslationAdmin):
-    list_display = ('brand', 'title', 'category', 'price',
+    list_display = ('id', 'title', 'brand', 'category', 'price',
                 'show_image', 'available', )
+    list_display_links = ('id', 'title', )
+    search_fields = ('title', )
     list_editable = ('available', )
     list_filter = ('available', 'price', )
     prepopulated_fields = {"slug": ("title",)}
+    save_on_top = True
 
     def show_image(self, obj):
         if obj.image:
@@ -34,11 +38,14 @@ class SmartPhoneAdmin(TranslationAdmin):
 
 
 class NotebookAdmin(TranslationAdmin):
-    list_display = ('brand', 'title', 'category', 'price',
+    list_display = ('id', 'title', 'brand', 'category', 'price',
                 'show_image', 'available', )
+    list_display_links = ('id', 'title', )
+    search_fields = ('title', )
     list_editable = ('available', )
     list_filter = ('available', 'price', )
     prepopulated_fields = {"slug": ("title",)}
+    save_on_top = True
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == 'category':
@@ -55,11 +62,14 @@ class NotebookAdmin(TranslationAdmin):
 
 
 class TvAdmin(TranslationAdmin):
-    list_display = ('brand', 'title', 'category', 'price',
+    list_display = ('id', 'title', 'brand', 'category', 'price',
                 'show_image', 'available', )
+    list_display_links = ('id', 'title', )
+    search_fields = ('title', )
     list_editable = ('available', )
     list_filter = ('available', 'price', )
     prepopulated_fields = {"slug": ("title",)}
+    save_on_top = True
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == 'televizory':

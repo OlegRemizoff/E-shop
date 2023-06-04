@@ -10,14 +10,14 @@ class CategoryTranslationOptions(TranslationOptions):
 
 @register(SmartPhone)
 class SmartPhoneTranslationOptions(TranslationOptions):
-    fields = ('title', 'description', )
+    fields = ('color', 'description', 'camera', 'memory',)
 
 
 @register(Notebook)
 class NotebookTranslationOptions(TranslationOptions):
-    fields = ('title', 'description', )
+    fields = ('color', 'description', 'battery', )
 
 
 @register(Tv)
 class TvTranslationOptions(TranslationOptions):
-    fields = ('title', 'description', )
+    fields = ('color', 'description', )

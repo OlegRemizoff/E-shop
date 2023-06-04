@@ -1,7 +1,11 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load humanize %}
+{% load i18n %}
 
+{% block title %}
+{{ block.super }}|{% translate 'Результаты поиска' %}
+{% endblock %}
 
 {% block content %}
 
@@ -9,7 +13,7 @@
     <div class="container">
         <div class="row">
             <div class="col-12">
-                <h3 class="section-title">Результаты поиска</h3>
+                <h3 class="section-title">{% translate 'Результаты поиска' %}</h3>
             </div>
             {% for item in products %}
 
@@ -21,8 +25,7 @@
 
                     <div class="product-details">
                         <h4><a href="{{ item.get_absolute_url }}">{{ item.title }}</a></h4>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vero, possimus nostrum! 2Lorem
-                            ipsum dolor sit amet, consectetur adipisicing elit. Vero, possimus nostrum!</p>
+                        <p>{{ item.description }}</p>
                         <div class="product-bottom-details d-flex justify-content-between">
                             <div class="product-price">{{ item.price|floatformat:0|intcomma }} &#8381;</div>
                             <div class="product-links">

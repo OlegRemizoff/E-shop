@@ -15,6 +15,10 @@ def cart(request):
 
 
     TYPE_MODEL_CLASS = {
+        'Smartphones': SmartPhone,
+        'Notebooks': Notebook,
+        'Tv': Tv,
+        
         'Смартфоны': SmartPhone,
         'Ноутбуки': Notebook,
         'Телевизоры': Tv,

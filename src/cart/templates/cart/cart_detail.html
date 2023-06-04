@@ -1,9 +1,10 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load humanize %}
+{% load i18n %}
 
 {% block title %}
-  {{ block.super }}|Корзина
+  {{ block.super }}|{% translate 'Корзина' %}
 {% endblock %}
 
 
@@ -26,14 +27,14 @@
 
         <div class="col-10">
           <div class="d-flex justify-content-between align-items-center mb-4">
-            <h3 class="fw-normal mb-0 text-black">Ваша корзина:  {% if not product_count %} пуста {% endif %}</h3>
+            <h3 class="fw-normal mb-0 text-black">{% translate 'Ваша корзина:' %}  {% if not product_count %} {% translate 'пуста' %} {% endif %}</h3>
             <div>
               <form action="" method="GET" id="sorted-cart">
                 <div class="input-group mb-3">
                   <select name="res" class="form-select" id="input-sort">
-                    <option value="id">По умолчанию</option>
-                    <option value="product_sum">Цена по возрастанию &#8593;</option>
-                    <option value="-product_sum">Цена по убыванию  &#8595;</option>
+                    <option value="id">{% translate 'По умолчанию' %}</option>
+                    <option value="product_sum">{% translate 'Цена по возрастанию' %} &#8593;</option>
+                    <option value="-product_sum">{% translate 'Цена по убыванию' %}  &#8595;</option>
                   <input type="submit" value="Отправить" hidden>
                 </div>
                 </form>
@@ -54,10 +55,10 @@
                     class="img-fluid rounded-3" alt="Cotton T-shirt">
                 </div>
                 <div class="col-md-3 col-lg-3 col-xl-3">
-                  <p>Наименование</p>
+                  <p>{% translate 'Наименование' %}</p>
                     {{ item.title }}
                   </a></p>
-                  <p><span class="text-muted"></span><span class="text-muted">Цвет: </span>{{ item.color }}</p>
+                  <p><span class="text-muted"></span><span class="text-muted">{% translate 'Цвет:' %} </span>{{ item.color }}</p>
                 </div>
 
                 <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
@@ -67,13 +68,13 @@
                     <input type="hidden" name="url_from" value="{{ request.path }}">
                     <input type="hidden" name="price" value="{{ item.price }}">
                     
-                    <label for="quantity">Кол-во: </label>
+                    <label for="quantity">{% translate 'Кол-во:' %} </label>
                     <input type="number" class="form-control" id="quantity" name="quantity" min="1" max="10" value="{{ item.qty }}">
-                    <input type="submit" class="btn btn-danger form-control" value="Изменить кол-во" style="margin-top: 5px;">            
+                    <input type="submit" class="btn btn-danger form-control" value="{% translate 'Изменить кол-во' %}" style="margin-top: 5px;">            
                   </form>
                 </div>
                 <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
-                  <p>Цена</p>
+                  <p>{% translate 'Цена' %}</p>
                   <h5 class="mb-0">{{ item.product_sum|floatformat:0|intcomma  }} &#8381;</span></h5>
                 </div>
 
@@ -91,20 +92,20 @@
           <div class="card mb-5">
             <div class="card-body p-4">
               <div class="float-end">
-                  <h5 class="mb-0">Итого: {{ total_price|floatformat:0|intcomma  }} &#8381;</h5>
+                  <h5 class="mb-0">{% translate 'Итого:' %} {{ total_price|floatformat:0|intcomma  }} &#8381;</h5>
               </div>
             </div>
           </div>
           <div class="d-flex justify-content-end">
             <div class="modal-footer">
               <a href="{% url 'shop:home' %}">
-              <button type="button" class="btn btn-danger">Продолжить покупки</button>
+              <button type="button" class="btn btn-danger">{% translate 'Продолжить покупки' %}</button>
               </a>
               {% if not product_count %}
 
               {% else %}
                 <a href="{% url 'orders:order_create' %}">
-                  <button type="button" class="btn btn-primary">Оформить заказ</button>
+                  <button type="button" class="btn btn-primary">{% translate 'Оформить заказ' %}</button>
                 </a>
               {% endif %}
             </div>
