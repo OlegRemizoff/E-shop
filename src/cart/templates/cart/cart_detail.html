@@ -78,7 +78,7 @@
                   <h5 class="mb-0">{{ item.product_sum|floatformat:0|intcomma  }} &#8381;</span></h5>
                 </div>
 
-                <div class="col-md-1 col-lg-1 col-xl-1 text-end">
+                <div class="col-md-1 col-lg-1 col-xl-1" style="margin-top: 30px;">
                   <form action="{% url 'cart:remove' item.slug %}" method="POST">
                     {% csrf_token %}
                     <label for="trash" class="text-danger"><i class="fas fa-trash fa-lg"></i></label>
