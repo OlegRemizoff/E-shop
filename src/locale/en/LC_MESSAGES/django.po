@@ -218,7 +218,7 @@ msgstr "Orel, st. Pushkin, 10"
 
 #: templates/inc/_footer.html:21
 msgid "пн-вс: 9:00 - 18:00"
-msgstr "mon-sun: from 9am till 6 o'clock pm"
+msgstr "mon-sun: from 9:00 AM till 6:00 PM"
 
 #: templates/inc/_footer.html:22
 msgid "без перерыва"
