@@ -30,7 +30,7 @@
 						class="fas fa-chevron-circle-down"></i></button>
 			</div>
 			<!-- aside Widget -->
-			{% include 'inc/_sidebar.html' %}
+			{% include 'shop/inc/_sidebar.html' %}
 			<!-- /aside Widget -->
 		</div>
 
@@ -96,9 +96,9 @@
 								<div class="product-price">{{ item.price|floatformat:0|intcomma }} &#8381;</div>
 								<div class="product-links">
 								{% if item.slug in url_array %}
-									{% include 'inc/_icon_in.html' %}
+									{% include 'cart/inc/_icon_in.html' %}
 								{% else %}
-									{% include 'inc/_icon.html' %}
+									{% include 'cart/inc/_icon.html' %}
 								{% endif %}
 							<a href="#"><i class="far fa-heart"></i></a>
 								</div>

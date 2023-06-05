@@ -32,17 +32,17 @@
 
                 <h6>{% translate 'Коротко о товаре:' %}</h6>
                 {% if product.category.slug == 'smartphones' and LANGUAGE_CODE == 'ru' %}
-                    {% include 'inc/_phone_rus.html' %}
+                    {% include 'shop/inc/_phone_rus.html' %}
 				{% elif product.category.slug == 'smartphones' and LANGUAGE_CODE == 'en' %}
-					{% include 'inc/_phone_eng.html' %}
+					{% include 'shop/inc/_phone_eng.html' %}
 				{% elif product.category.slug == 'notebooks' and LANGUAGE_CODE == 'ru' %}
-					{% include 'inc/_note_rus.html' %}
+					{% include 'shop/inc/_note_rus.html' %}
 				{% elif product.category.slug == 'notebooks' and LANGUAGE_CODE == 'en' %}
-					{% include 'inc/_note_eng.html' %}
+					{% include 'shop/inc/_note_eng.html' %}
 				{% elif product.category.slug == 'televizory' and LANGUAGE_CODE == 'ru' %}
-					{% include 'inc/_tv_rus.html' %}
+					{% include 'shop/inc/_tv_rus.html' %}
 				{% elif product.category.slug == 'televizory' and LANGUAGE_CODE == 'en' %}
-					{% include 'inc/_tv_eng.html' %}
+					{% include 'shop/inc/_tv_eng.html' %}
 				{% endif %}
 
 
@@ -50,16 +50,16 @@
 
 				{% comment %}
 				{% if product.category.slug == 'notebooks' and LANGUAGE_CODE == 'ru' %}
-				{% include 'inc/_note_rus.html' %}
+				{% include 'shop/inc/_note_rus.html' %}
 				{% else %}
-					{% include 'inc/_note_eng.html' %}
+					{% include 'shop/inc/_note_eng.html' %}
 				{% endif %}
 
 
 				{% if product.category.slug == 'televizory' and LANGUAGE_CODE == 'ru' %}
-					{% include 'inc/_tv_rus.html' %}
+					{% include 'shop/inc/_tv_rus.html' %}
 				{% else %}
-					{% include 'inc/_tv_eng.html' %}
+					{% include 'shop/inc/_tv_eng.html' %}
 				{% endif %}
 				{% endcomment %}
 
@@ -89,8 +89,8 @@
 						</button>
 					</form>
 					{% else %}
-					{% include 'inc/_icon_in.html' %}
 					<span class="product-price">{% translate 'Товар в корзине' %}</span>
+					{% include 'cart/inc/_icon_in.html' %}
 					{% endif %}
 
 				</div>
