@@ -27,3 +27,7 @@
 ### 4) Создать суперпользователя
 
     python manage.py createsuperuser
+
+# Старт
+
+    python manage.py runserver
