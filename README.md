@@ -1,6 +1,6 @@
 <p align="center">
     <a href="http://olegrem1zoff.pythonanywhere.com/" target="_blank" rel="noopener noreferrer">
-        <img width="100" src="logo.png" title="e-shop">
+        <img width="400px" src="logo.png" title="e-shop">
     </a>
 </p>
 
