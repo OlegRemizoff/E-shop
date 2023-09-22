@@ -11,7 +11,7 @@ class LatestProductsManager:
         ct_models = ContentType.objects.filter(model__in=args)
         for ct_model in ct_models:
             model_products = ct_model.model_class(
-            )._base_manager.all().order_by('id')[:3]
+            )._base_manager.all().select_related('category').order_by('id')[:3]
             products.extend(model_products)
 
         return products
