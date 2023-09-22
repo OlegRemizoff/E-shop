@@ -24,6 +24,7 @@ urlpatterns = [
     path('i18n/', include('django.conf.urls.i18n')),
     path('admin/', admin.site.urls),
 
+
 ]
 
 urlpatterns += i18n_patterns (
@@ -37,3 +38,8 @@ urlpatterns += i18n_patterns (
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+    import debug_toolbar
+    urlpatterns = [
+    path('__debug__/', include(debug_toolbar.urls)),
+    ] + urlpatterns
