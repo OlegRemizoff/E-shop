@@ -59,10 +59,10 @@ class ProductByCategoryView(CategoryBrandCount, View):
 
         ### Order ###
         if request.GET.get('res'):
-            category = category_model._base_manager.order_by(
+            category = category_model._base_manager.select_related('category').order_by(
                 request.GET.get('res'))
         else:
-            category = category_model._base_manager.order_by('id')
+            category = category_model._base_manager.select_related('category').order_by('id')
 
         ### Show ###
         if request.GET.get('show'):
@@ -130,7 +130,7 @@ class CategoryFilterView(View):
 
             #     )
 
-            return category_model._base_manager.filter(**kwargs)
+            return category_model._base_manager.filter(**kwargs).prefetch_related()
         
         queryset = None
         if request.GET.get('other'):
